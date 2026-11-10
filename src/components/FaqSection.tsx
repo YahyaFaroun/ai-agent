@@ -1,101 +1,105 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, HelpCircle } from "lucide-react";
+import { ChevronDown } from "lucide-react";
+
+const FAQ_ITEMS = [
+  {
+    topic: "KI-Agenten",
+    question: "Was ist ein KI-Agent?",
+    answer:
+      "Ein KI-Agent ist ein digitales System auf Basis moderner Sprachmodelle, das definierte Aufgaben nach klaren Vorgaben unterstützt oder automatisiert bearbeitet – abgestimmt auf deinen jeweiligen Einsatzbereich.",
+  },
+  {
+    topic: "Einsatzmöglichkeiten",
+    question: "Welche Aufgaben kann ein KI-Agent übernehmen?",
+    answer:
+      "Je nach Konfiguration kann der Agent unter anderem Kundenanfragen vorstrukturieren, E-Mails bearbeiten, Termine koordinieren, Dokumente vorbereiten, Informationen recherchieren und wiederkehrende Abläufe automatisieren.",
+  },
+  {
+    topic: "Integrationen",
+    question: "Welche bestehenden Systeme lassen sich anbinden?",
+    answer:
+      "Bestehende Programme und Kanäle wie E-Mail, Kalender, Website, CRM-Systeme, Datenbanken, Onlineshops oder Messenger lassen sich einbinden, sofern entsprechende Schnittstellen verfügbar sind.",
+  },
+  {
+    topic: "Laufende Kosten",
+    question: "Fallen neben der Einrichtung laufende Kosten an?",
+    answer:
+      "Je nach gewählter technischer Infrastruktur, Nutzungsintensität der Sprachmodelle und einer optionalen laufenden Betreuung können laufende Betriebskosten entstehen. Alle Konditionen werden vorab transparent und individuell abgestimmt.",
+  },
+  {
+    topic: "Einrichtung",
+    question: "Wie läuft die Einrichtung ab?",
+    answer:
+      "Auf Grundlage deiner Anfrage besprechen wir die gewünschten Aufgaben und Schnittstellen, definieren den konkreten Funktionsumfang und richten deinen KI-Agenten anschließend individuell für deinen Bedarf ein.",
+  },
+  {
+    topic: "Datenschutz",
+    question: "Wie wird der Datenschutz berücksichtigt?",
+    answer:
+      "Bei der Konzeption und Auswahl der technischen Komponenten werden die Anforderungen der DSGVO berücksichtigt. Welche Systeme und Datenverarbeitungen konkret zum Einsatz kommen, wird vor der Umsetzung gemeinsam festgelegt.",
+  },
+] as const;
 
 export default function FaqSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-
-  const faqs = [
-    {
-      question: "Was ist ein KI-Agent?",
-      answer:
-        "Ein KI-Agent ist ein spezialisiertes Softwaresystem auf Basis moderner Sprachmodelle, das im Gegensatz zu simplen Chatbots eigenständig Aufgaben planen, Daten interpretieren und konkrete Aktionen in Drittprogrammen ausführen kann – beispielsweise E-Mails beantworten, Termine im Kalender eintragen oder Kundendaten im CRM aktualisieren.",
-    },
-    {
-      question: "Welche Aufgaben kann er übernehmen?",
-      answer:
-        "Typische Einsatzbereiche umfassen den 24/7 First-Level Kundensupport, die Beantwortung wiederkehrender E-Mail-Anfragen, automatisierte Terminabstimmungen, Vorqualifizierung von Vertriebskontakten, Stammdatenerfassung sowie die strukturierte Zusammenfassung und Weiterleitung komplexer Vorgänge an menschliche Mitarbeiter.",
-    },
-    {
-      question: "Kann ich bestehende Programme verbinden?",
-      answer:
-        "Ja. Sofern deine bestehenden Programme über dokumentierte Schnittstellen (APIs, Webhooks) verfügen oder gängige Cloud-Tools wie HubSpot, Salesforce, Pipedrive, Google Workspace, Microsoft 365 oder WhatsApp Business genutzt werden, kann der Agent direkt an deine bestehende Systemlandschaft angebunden werden.",
-    },
-    {
-      question: "Fallen monatliche Kosten an?",
-      answer:
-        "Neben der einmaligen Konzeption und Einrichtung können laufende Betriebskosten anfallen. Diese setzen sich in der Regel aus dem tatsächlichen Verbrauch der Sprachmodell-Tokens (z. B. OpenAI, Anthropic oder eigenes Hosting) und optionalen Wartungs- bzw. Betreuungsvereinbarungen zusammen. Alle laufenden Kostenpunkte schlüsseln wir vorab transparent für dich auf.",
-    },
-    {
-      question: "Wie lange dauert die Einrichtung?",
-      answer:
-        "Die Dauer hängt von der Komplexität deiner Prozesse ab. Einfache Assistenten (Starter) können in der Regel innerhalb von 1 bis 2 Wochen einsatzbereit sein. Umfangreichere Business- und Enterprise-Lösungen mit mehrstufigen Integrationen und individuellen Freigabeprozessen benötigen üblicherweise 3 bis 6 Wochen.",
-    },
-    {
-      question: "Sind meine Unternehmensdaten geschützt?",
-      answer:
-        "Ja, Datenschutz hat oberste Priorität. Wir konfigurieren deine KI-Lösung nach europäischen DSGVO-Standards mit Auftragsverarbeitungsverträgen (AVV) und Opt-outs gegen das Training öffentlicher Modelle. Auf Kundenwunsch können im Enterprise-Paket auch europäische Hosting-Standorte oder isolierte Private-Cloud-Instanzen gewählt werden.",
-    },
-  ];
-
-  const toggleAccordion = (idx: number) => {
-    setOpenIndex(openIndex === idx ? null : idx);
-  };
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section id="faq" className="py-24 relative overflow-hidden">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-[#ff8c42]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#ff6b2b]"></span>
-            <span>[ 06 // HÄUFIGE FRAGEN ]</span>
-          </div>
-
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
-            Transparente Antworten.
+    <section
+      id="faq"
+      aria-labelledby="faq-heading"
+      className="relative px-4 sm:px-6 py-10"
+    >
+      <div className="max-w-3xl mx-auto space-y-4">
+        <div>
+          <span className="text-[11px] font-mono uppercase tracking-widest text-[#ff8c42] block">
+            Fragen &amp; Antworten
+          </span>
+          <h2
+            id="faq-heading"
+            className="text-lg sm:text-xl font-bold text-white mt-0.5"
+          >
+            FAQ
           </h2>
-
-          <p className="text-base sm:text-lg text-zinc-400">
-            Alles Wissenswerte rund um die Implementierung, Technologie und
-            Konditionen deines KI-Mitarbeiters.
-          </p>
         </div>
 
-        {/* Accordion Container */}
-        <div className="space-y-4">
-          {faqs.map((faq, idx) => {
+        <div className="space-y-2.5">
+          {FAQ_ITEMS.map((item, idx) => {
             const isOpen = openIndex === idx;
             return (
               <div
-                key={idx}
-                className={`hud-panel rounded-xl border transition-all duration-300 overflow-hidden ${
+                key={item.topic}
+                className={`hud-panel rounded-xl border transition-colors overflow-hidden ${
                   isOpen
-                    ? "border-[#ff6b2b]/50 shadow-[0_4px_20px_rgba(255,107,43,0.1)]"
-                    : "border-zinc-800/80 hover:border-zinc-700"
+                    ? "border-[#ff6b2b]/45"
+                    : "border-zinc-800/85 hover:border-zinc-700"
                 }`}
               >
                 <button
-                  onClick={() => toggleAccordion(idx)}
-                  className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer focus:outline-none"
+                  type="button"
+                  onClick={() => setOpenIndex(isOpen ? null : idx)}
+                  aria-expanded={isOpen}
+                  className="w-full px-4 sm:px-5 py-3.5 text-left flex items-center justify-between gap-3 cursor-pointer"
                 >
-                  <span className="flex items-center gap-3 text-base sm:text-lg font-bold text-white">
-                    <HelpCircle className="w-5 h-5 text-[#ff8c42] shrink-0" />
-                    <span>{faq.question}</span>
-                  </span>
-                  <div
-                    className={`w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center shrink-0 text-zinc-400 transition-transform duration-300 ${
-                      isOpen ? "rotate-180 text-[#ff8c42] border-[#ff6b2b]/50" : ""
-                    }`}
-                  >
-                    <ChevronDown className="w-4 h-4" />
+                  <div className="min-w-0">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-500 block">
+                      {item.topic}
+                    </span>
+                    <span className="text-sm font-semibold text-zinc-100 block mt-0.5">
+                      {item.question}
+                    </span>
                   </div>
+                  <ChevronDown
+                    className={`w-4 h-4 text-zinc-400 shrink-0 transition-transform duration-200 ${
+                      isOpen ? "rotate-180 text-[#ff8c42]" : ""
+                    }`}
+                  />
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-zinc-400 leading-relaxed border-t border-zinc-800/60 animate-in fade-in slide-in-from-top-2 duration-200">
-                    <p>{faq.answer}</p>
+                  <div className="px-4 sm:px-5 pb-4 pt-1 text-xs sm:text-sm text-zinc-400 leading-relaxed border-t border-zinc-800/60">
+                    {item.answer}
                   </div>
                 )}
               </div>

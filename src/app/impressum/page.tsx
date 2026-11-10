@@ -1,95 +1,82 @@
 import Link from "next/link";
 import { ArrowLeft, Shield } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import LegalLinks from "@/components/LegalLinks";
 
 export const metadata = {
   title: "Impressum – Arslan AI",
-  description: "Rechtliche Anbieterkennzeichnung von Arslan AI nach § 5 DDG.",
+  description: "Vorbereitete Anbieterkennzeichnung gemäß § 5 DDG.",
 };
 
 export default function ImpressumPage() {
   return (
-    <>
-      <Navbar />
-      <main className="min-h-screen pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-zinc-300">
+    <div className="min-h-screen bg-[#050507] text-zinc-300 flex flex-col">
+      <main className="flex-1 pt-12 pb-12 px-4 sm:px-6 max-w-3xl mx-auto w-full">
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-xs font-mono text-zinc-400 hover:text-[#ff8c42] mb-8 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Zurück zur Startseite</span>
+          <span>Zurück</span>
         </Link>
 
-        <div className="hud-panel rounded-2xl p-8 sm:p-12 border border-zinc-800 space-y-8">
+        <div className="hud-panel rounded-2xl p-6 sm:p-10 border border-zinc-800 space-y-7">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-[#ff8c42] mb-3">
               <Shield className="w-3.5 h-3.5" />
-              <span>RECHTLICHE HINWEISE // § 5 DDG</span>
+              <span>VORBEREITETE SEITE // § 5 DDG</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
               Impressum
             </h1>
+            <p className="text-xs text-zinc-500 mt-2">
+              Hinweis: Bitte ersetze die gekennzeichneten Platzhalter vor der öffentlichen Freischaltung durch deine rechtsgültigen Unternehmensangaben.
+            </p>
           </div>
 
-          <div className="space-y-6 text-sm sm:text-base leading-relaxed">
+          <div className="space-y-6 text-sm leading-relaxed">
             <section className="space-y-2">
-              <h2 className="text-lg font-bold text-white">Angaben gemäß § 5 DDG:</h2>
-              <div className="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 font-mono text-xs sm:text-sm text-zinc-300 space-y-1">
-                <p><strong>[Unternehmen / Agenturname]</strong></p>
-                <p>Arslan AI – Agentur für KI-Automatisierung</p>
-                <p>Vertreten durch: [Vorname Nachname / Vertretungsberechtigter]</p>
-                <p>[Musterstraße 12]</p>
-                <p>[12345 Musterstadt, Deutschland]</p>
+              <h2 className="text-base font-bold text-white">Angaben gemäß § 5 DDG</h2>
+              <div className="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 font-mono text-xs text-zinc-300 space-y-1">
+                <p>[Unternehmensbezeichnung / Rechtsform]</p>
+                <p>Vertreten durch: [Vorname Nachname]</p>
+                <p>[Straße und Hausnummer]</p>
+                <p>[PLZ Ort, Land]</p>
               </div>
             </section>
 
             <section className="space-y-2">
-              <h2 className="text-lg font-bold text-white">Kontakt:</h2>
-              <div className="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 font-mono text-xs sm:text-sm text-zinc-300 space-y-1">
-                <p>Telefon: [+49 (0) 123 456789]</p>
-                <p>E-Mail: [kontakt@arslan-ai.de]</p>
-                <p>Website: [www.arslan-ai.de]</p>
+              <h2 className="text-base font-bold text-white">Kontakt</h2>
+              <div className="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 font-mono text-xs text-zinc-300 space-y-1">
+                <p>Telefon: [Telefonnummer eintragen]</p>
+                <p>E-Mail: [E-Mail-Adresse eintragen]</p>
               </div>
             </section>
 
             <section className="space-y-2">
-              <h2 className="text-lg font-bold text-white">Registereintrag (sofern zutreffend):</h2>
-              <p className="text-zinc-400 text-sm">
-                Eintragung im Handelsregister.<br />
-                Registergericht: [Amtsgericht Musterstadt]<br />
-                Registernummer: [HRB XXXXX]
+              <h2 className="text-base font-bold text-white">Registereintrag (falls vorhanden)</h2>
+              <p className="text-zinc-400 text-xs sm:text-sm">
+                Registergericht: [Registergericht eintragen]<br />
+                Registernummer: [Registernummer eintragen]
               </p>
             </section>
 
             <section className="space-y-2">
-              <h2 className="text-lg font-bold text-white">Umsatzsteuer-ID:</h2>
-              <p className="text-zinc-400 text-sm">
-                Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br />
-                [DE XXX XXX XXX]
+              <h2 className="text-base font-bold text-white">Umsatzsteuer-ID (falls vorhanden)</h2>
+              <p className="text-zinc-400 text-xs sm:text-sm">
+                Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: [USt-IdNr. eintragen]
               </p>
             </section>
 
             <section className="space-y-2">
-              <h2 className="text-lg font-bold text-white">Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:</h2>
-              <p className="text-zinc-400 text-sm">
-                [Vorname Nachname]<br />
-                [Musterstraße 12]<br />
-                [12345 Musterstadt]
-              </p>
-            </section>
-
-            <section className="space-y-2">
-              <h2 className="text-lg font-bold text-white">Streitschlichtung:</h2>
-              <p className="text-zinc-400 text-sm leading-relaxed">
-                Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: 
-                https://ec.europa.eu/consumers/odr/. Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+              <h2 className="text-base font-bold text-white">Verantwortlich gemäß § 18 Abs. 2 MStV</h2>
+              <p className="text-zinc-400 text-xs sm:text-sm">
+                [Vorname Nachname, Anschrift eintragen]
               </p>
             </section>
           </div>
         </div>
       </main>
-      <Footer />
-    </>
+      <LegalLinks />
+    </div>
   );
 }
