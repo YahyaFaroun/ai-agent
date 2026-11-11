@@ -250,6 +250,7 @@ export async function POST(request: Request) {
         });
 
       if (error) {
+        console.error("[INQUIRY_DB_ERROR]", error.code, error.message);
         return NextResponse.json(
           {
             saved: false,

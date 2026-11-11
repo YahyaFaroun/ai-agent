@@ -56,6 +56,9 @@ drop policy if exists "Allow authenticated dashboard update" on public.website_l
 -- Weder 'anon' noch 'authenticated' erhalten Tabellenzugriff: Rechte explizit entziehen
 revoke all on table public.website_leads from anon, authenticated;
 
+-- Dem internen service_role (Backend-Server) und postgres die notwendigen Rechte erteilen:
+grant all on table public.website_leads to service_role, postgres;
+
 -- Dokumentations-Kommentare
 comment on table public.website_leads is 'Kundenanfragen der Website im Projekt yy-ai-platform (Zero Trust / Server-only Access)';
 comment on column public.website_leads.priority is 'Priorität für das spätere interne Dashboard';
