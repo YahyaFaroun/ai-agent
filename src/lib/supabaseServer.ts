@@ -5,7 +5,7 @@ let cachedClient: SupabaseClient | null = null;
 /**
  * Erstellt oder liefert den serverseitigen Supabase-Client für das Projekt 'yy-ai-platform'.
  * Verwendet den geheimen SUPABASE_SERVICE_ROLE_KEY für sichere, serverseitige
- * Schreibzugriffe auf die isolierte Tabelle 'arslan_leads'.
+ * Schreibzugriffe auf die Tabelle 'website_leads'.
  *
  * SICHERHEIT:
  * - Läuft AUSSCHLIESSLICH serverseitig in der Next.js API Route (/api/inquiries).

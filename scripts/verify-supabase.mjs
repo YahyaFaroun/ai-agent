@@ -24,7 +24,7 @@ async function verifySupabaseConnection() {
       auth: { persistSession: false, autoRefreshToken: false },
     });
 
-    const { error: anonReadError } = await anonClient.from("arslan_leads").select("id").limit(1);
+    const { error: anonReadError } = await anonClient.from("website_leads").select("id").limit(1);
     if (anonReadError) {
       console.log(`[PASS] Öffentlicher Lesezugriff (anon) erfolgreich blockiert: ${anonReadError.message}`);
     } else {
@@ -33,7 +33,7 @@ async function verifySupabaseConnection() {
   }
 
   // 2. Serverseitiges Einfügen über Service-Role
-  console.log("\n2. Teste serverseitige Speicherung in 'arslan_leads' (wie in /api/inquiries)...");
+  console.log("\n2. Teste serverseitige Speicherung in 'website_leads' (wie in /api/inquiries)...");
   const testPayload = {
     scope: "Geschäftlich",
     industry: "KI-Automatisierung & QA",
@@ -59,7 +59,7 @@ async function verifySupabaseConnection() {
   };
 
   const { data: insertedData, error: insertError } = await serviceClient
-    .from("arslan_leads")
+    .from("website_leads")
     .insert(testPayload)
     .select("id, created_at, status, priority, assigned_agent")
     .single();
@@ -72,9 +72,9 @@ async function verifySupabaseConnection() {
   console.log(`[SUCCESS] Test-Lead erfolgreich angelegt (ID: ${insertedData.id}, Status: ${insertedData.status}, Agent: ${insertedData.assigned_agent})`);
 
   // 3. Sofortige Bereinigung des Test-Leads
-  console.log("\n3. Bereinige Test-Datensatz aus 'arslan_leads'...");
+  console.log("\n3. Bereinige Test-Datensatz aus 'website_leads'...");
   const { error: deleteError } = await serviceClient
-    .from("arslan_leads")
+    .from("website_leads")
     .delete()
     .eq("id", insertedData.id);
 
@@ -84,7 +84,7 @@ async function verifySupabaseConnection() {
     console.log("[SUCCESS] Test-Lead wurde rückstandslos aus der Datenbank entfernt.");
   }
 
-  console.log("\nFertig: Tabelle 'arslan_leads' im Projekt 'yy-ai-platform' ist zu 100 % einsatzbereit!");
+  console.log("\nFertig: Tabelle 'website_leads' im Projekt 'yy-ai-platform' ist zu 100 % einsatzbereit!");
 }
 
 verifySupabaseConnection().catch((err) => {

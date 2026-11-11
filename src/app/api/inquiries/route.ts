@@ -220,13 +220,13 @@ export async function POST(request: Request) {
     submittedAt: consentedAt,
   };
 
-  // 8. Speicherung in Supabase (serverseitig, RLS-geschützt in isolierter Tabelle arslan_leads)
+  // 8. Speicherung in Supabase (serverseitig, RLS-geschützt in Tabelle website_leads)
   const supabase = getSupabaseServerClient();
 
   if (supabase) {
     try {
       const { error } = await supabase
-        .from("arslan_leads")
+        .from("website_leads")
         .insert({
           scope: usageScope,
           industry,
@@ -254,8 +254,6 @@ export async function POST(request: Request) {
           {
             saved: false,
             code: "DATABASE_ERROR",
-            dbCode: error.code,
-            dbMessage: error.message,
             message:
               "Die Anfrage konnte vorübergehend nicht in der Datenbank gespeichert werden. Bitte versuche es in Kürze erneut.",
           },

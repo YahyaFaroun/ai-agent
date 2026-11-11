@@ -1,5 +1,6 @@
 -- ==============================================================================
--- Finales Schema für Arslan AI Leads (Projekt: yy-ai-platform)
+-- Schema für Website-Leads in Supabase (Projekt: yy-ai-platform)
+-- Tabelle: public.website_leads
 -- 
 -- SICHERHEIT:
 -- - Row Level Security (RLS) ist strikt aktiviert.
@@ -7,10 +8,9 @@
 -- - Alle Rechte für 'anon' und 'authenticated' sind explizit entzogen.
 -- - Schreibzugriff erfolgt AUSSCHLIESSLICH serverseitig über die Next.js API-Route
 --   mit dem geheimen SUPABASE_SERVICE_ROLE_KEY.
--- - Das spätere Dashboard erhält erst bei seiner Implementierung eigene Berechtigungen.
 -- ==============================================================================
 
-create table if not exists public.arslan_leads (
+create table if not exists public.website_leads (
   id uuid primary key default gen_random_uuid(),
   created_at timestamptz not null default now(),
   
@@ -38,26 +38,26 @@ create table if not exists public.arslan_leads (
 );
 
 -- Indexe für spätere Filterung und Abfragen
-create index if not exists idx_arslan_leads_created_at on public.arslan_leads (created_at desc);
-create index if not exists idx_arslan_leads_status on public.arslan_leads (status);
-create index if not exists idx_arslan_leads_priority on public.arslan_leads (priority);
-create index if not exists idx_arslan_leads_email on public.arslan_leads (email);
+create index if not exists idx_website_leads_created_at on public.website_leads (created_at desc);
+create index if not exists idx_website_leads_status on public.website_leads (status);
+create index if not exists idx_website_leads_priority on public.website_leads (priority);
+create index if not exists idx_website_leads_email on public.website_leads (email);
 
 -- Row Level Security (RLS) strikt aktivieren
-alter table public.arslan_leads enable row level security;
+alter table public.website_leads enable row level security;
 
 -- Alte Policies restlos entfernen (falls zuvor angelegt)
-drop policy if exists "Allow insert with consent on arslan_leads" on public.arslan_leads;
-drop policy if exists "Allow public insert with consent" on public.arslan_leads;
-drop policy if exists "Allow authenticated dashboard users read arslan_leads" on public.arslan_leads;
-drop policy if exists "Allow authenticated dashboard select" on public.arslan_leads;
-drop policy if exists "Allow authenticated dashboard update" on public.arslan_leads;
+drop policy if exists "Allow insert with consent on website_leads" on public.website_leads;
+drop policy if exists "Allow public insert with consent" on public.website_leads;
+drop policy if exists "Allow authenticated dashboard users read website_leads" on public.website_leads;
+drop policy if exists "Allow authenticated dashboard select" on public.website_leads;
+drop policy if exists "Allow authenticated dashboard update" on public.website_leads;
 
 -- Weder 'anon' noch 'authenticated' erhalten Tabellenzugriff: Rechte explizit entziehen
-revoke all on table public.arslan_leads from anon, authenticated;
+revoke all on table public.website_leads from anon, authenticated;
 
 -- Dokumentations-Kommentare
-comment on table public.arslan_leads is 'Kundenanfragen der Arslan AI Website im Projekt yy-ai-platform (Zero Trust / Server-only Access)';
-comment on column public.arslan_leads.priority is 'Priorität für das spätere interne Dashboard';
-comment on column public.arslan_leads.assigned_agent is 'Zugewiesener Agent (Standard: arslan)';
-comment on column public.arslan_leads.internal_notes is 'Interne Notizen';
+comment on table public.website_leads is 'Kundenanfragen der Website im Projekt yy-ai-platform (Zero Trust / Server-only Access)';
+comment on column public.website_leads.priority is 'Priorität für das spätere interne Dashboard';
+comment on column public.website_leads.assigned_agent is 'Zugewiesener Agent (Standard: arslan)';
+comment on column public.website_leads.internal_notes is 'Interne Notizen';
