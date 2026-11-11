@@ -64,6 +64,7 @@ export default function MultiStepInquiryForm() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [privacyConsent, setPrivacyConsent] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
 
   // Submission & validation states
   const [stepError, setStepError] = useState("");
@@ -196,6 +197,7 @@ export default function MultiStepInquiryForm() {
         privacyConsent,
       },
       submittedAt: new Date().toISOString(),
+      hp_website: honeypot || undefined,
     };
 
     setIsSubmitting(true);
@@ -252,6 +254,7 @@ export default function MultiStepInquiryForm() {
     setEmail("");
     setPhone("");
     setPrivacyConsent(false);
+    setHoneypot("");
     setStepError("");
     setSubmitState({ status: "idle" });
   };
@@ -367,6 +370,20 @@ export default function MultiStepInquiryForm() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} noValidate className="space-y-6">
+              {/* Unsichtbares Honeypot-Feld zur Spam- und Bot-Abwehr */}
+              <div style={{ display: "none" }} aria-hidden="true">
+                <label htmlFor="inquiry-hp-field">Website</label>
+                <input
+                  id="inquiry-hp-field"
+                  type="text"
+                  name="hp_website"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
+
               {/* Top Header & Progress Indicator 1/4 to 4/4 */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between gap-4">
