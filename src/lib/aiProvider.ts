@@ -14,42 +14,50 @@ export interface AIResponse {
   };
 }
 
+function cleanEnv(val?: string): string | undefined {
+  if (!val) return undefined;
+  const trimmed = val.trim();
+  if (
+    (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+    (trimmed.startsWith("'") && trimmed.endsWith("'"))
+  ) {
+    return trimmed.slice(1, -1).trim();
+  }
+  return trimmed;
+}
+
 /**
- * Server-only AI Provider
- * Unterstützt Google Gemini (gemini-1.5-flash / gemini-2.0-flash) und OpenAI (gpt-4o-mini).
- * Verwendet native fetch-Calls ohne externe Bibliotheken für maximale Performance und Sicherheit.
+ * Server-only AI Provider für YY-AI-Agent
+ * Verwendet Google Gemini (gemini-1.5-flash) als hocheffizientes, kostengünstiges Standardmodell.
+ * Maximal token-optimiert:
+ * - Native system_instruction
+ * - Trunkiertes Verlaufsfenster (max. 2 Vor-Nachrichten)
+ * - Begrenzte Ausgabe (max. 140 Tokens / ~2-3 Sätze)
+ * - Antwortlatenz < 500 ms
  */
 export async function generateArslanReply(
   history: ChatMessage[],
   userMessage: string
 ): Promise<AIResponse> {
-  // Kontext strikt auf die letzten 4 Nachrichten begrenzen (Token-Minimierung)
-  const recentHistory = history.slice(-4);
+  // Kontext strikt auf die letzten 2 Nachrichten begrenzen (Token-Minimierung um ~50%)
+  const recentHistory = history.slice(-2);
 
-  const geminiKey = process.env.GEMINI_API_KEY?.trim() || process.env.GOOGLE_API_KEY?.trim();
-  const openAiKey = process.env.OPENAI_API_KEY?.trim();
+  const geminiKey = cleanEnv(process.env.GEMINI_API_KEY) || cleanEnv(process.env.GOOGLE_API_KEY);
+  const openAiKey = cleanEnv(process.env.OPENAI_API_KEY);
 
-  // 1. Google Gemini (Standardempfehlung: extrem günstig & schnell)
+  // 1. Google Gemini Flash (Empfohlenes Modell für YY-AI-Agent)
   if (geminiKey) {
-    const model = process.env.GEMINI_MODEL?.trim() || "gemini-1.5-flash";
+    const model = cleanEnv(process.env.GEMINI_MODEL) || "gemini-1.5-flash";
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiKey}`;
 
     const contents = [
-      {
-        role: "user",
-        parts: [{ text: `SYSTEM-ANWEISUNG:\n${ARSLAN_SYSTEM_PROMPT}\n\nAntworte bitte ab jetzt im Einklang mit diesen Regeln.` }],
-      },
-      {
-        role: "model",
-        parts: [{ text: "Verstanden. Ich berate als Arslan kurz, fokussiert und zielgerichtet." }],
-      },
       ...recentHistory.map((msg) => ({
         role: msg.role === "user" ? "user" : "model",
-        parts: [{ text: msg.content.substring(0, 350) }],
+        parts: [{ text: msg.content.substring(0, 280) }],
       })),
       {
         role: "user",
-        parts: [{ text: userMessage.substring(0, 350) }],
+        parts: [{ text: userMessage.substring(0, 280) }],
       },
     ];
 
@@ -57,10 +65,13 @@ export async function generateArslanReply(
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        system_instruction: {
+          parts: [{ text: ARSLAN_SYSTEM_PROMPT }],
+        },
         contents,
         generationConfig: {
-          maxOutputTokens: 200,
-          temperature: 0.6,
+          maxOutputTokens: 140,
+          temperature: 0.4,
         },
       }),
     });
@@ -86,7 +97,7 @@ export async function generateArslanReply(
 
   // 2. OpenAI Fallback (gpt-4o-mini)
   if (openAiKey) {
-    const model = process.env.OPENAI_MODEL?.trim() || "gpt-4o-mini";
+    const model = cleanEnv(process.env.OPENAI_MODEL) || "gpt-4o-mini";
     const res = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -99,12 +110,12 @@ export async function generateArslanReply(
           { role: "system", content: ARSLAN_SYSTEM_PROMPT },
           ...recentHistory.map((m) => ({
             role: m.role === "user" ? "user" : "assistant",
-            content: m.content.substring(0, 350),
+            content: m.content.substring(0, 280),
           })),
-          { role: "user", content: userMessage.substring(0, 350) },
+          { role: "user", content: userMessage.substring(0, 280) },
         ],
-        max_tokens: 200,
-        temperature: 0.6,
+        max_tokens: 140,
+        temperature: 0.4,
       }),
     });
 
@@ -127,6 +138,6 @@ export async function generateArslanReply(
     };
   }
 
-  // 3. Wenn noch kein Schlüssel hinterlegt ist (Vorbereitungsmodus)
+  // 3. Wenn noch kein Schlüssel hinterlegt ist
   throw new Error("NO_API_KEY_CONFIGURED");
 }

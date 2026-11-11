@@ -9,7 +9,7 @@ export default function HeroSection() {
       aria-label="Arslan KI-Avatar"
       className="relative pt-8 sm:pt-12 pb-4 flex flex-col items-center justify-center overflow-hidden select-none"
     >
-      <h1 className="sr-only">Arslan AI – Persönlicher KI-Agent</h1>
+      <h1 className="sr-only">YY-AI-Agent – Persönlicher KI-Agent</h1>
       {/* Subtle Ambient Ember Backlight matching Saifullah-2050 */}
       <div
         aria-hidden="true"

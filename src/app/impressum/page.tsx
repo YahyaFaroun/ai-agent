@@ -3,7 +3,7 @@ import { ArrowLeft, Shield } from "lucide-react";
 import LegalLinks from "@/components/LegalLinks";
 
 export const metadata = {
-  title: "Impressum – Arslan AI",
+  title: "Impressum – YY-AI-Agent",
   description: "Vorbereitete Anbieterkennzeichnung gemäß § 5 DDG.",
 };
 

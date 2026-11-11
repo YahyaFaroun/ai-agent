@@ -3,7 +3,7 @@ import { ArrowLeft, Lock } from "lucide-react";
 import LegalLinks from "@/components/LegalLinks";
 
 export const metadata = {
-  title: "Datenschutzerklärung – Arslan AI",
+  title: "Datenschutzerklärung – YY-AI-Agent",
   description: "Vorbereitete Datenschutzerklärung gemäß DSGVO.",
 };
 

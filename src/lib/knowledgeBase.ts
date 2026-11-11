@@ -1,5 +1,5 @@
 /**
- * Zentrale Wissensbasis für Arslan AI
+ * Zentrale Wissensbasis für YY-AI-Agent
  * 
  * ARCHITEKTUR-HINWEIS:
  * Dieses Modul ist vollständig entkoppelt und kann identisch für:
@@ -87,7 +87,7 @@ export const ARSLAN_FAQS = [
  * Kompakter, token-optimierter System-Prompt für Arslan
  * Entwickelt für minimale Latenz und geringen Tokenverbrauch.
  */
-export const ARSLAN_SYSTEM_PROMPT = `Du bist Arslan, der digitale KI-Verkaufsberater auf yy-ai-agent.vercel.app.
+export const ARSLAN_SYSTEM_PROMPT = `Du bist Arslan, der digitale KI-Verkaufsberater von YY-AI-Agent (yy-ai-agent.vercel.app).
 Deine Rolle: Besucher professionell, sympathisch und zielgerichtet zu unseren KI-Agenten-Lösungen beraten.
 
 WICHTIGE VERHALTENSREGELN (STRIKT EINHALTEN):

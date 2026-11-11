@@ -13,10 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Arslan AI – Dein eigener KI-Mitarbeiter. Rund um die Uhr.",
+  title: "YY-AI-Agent – Dein eigener KI-Mitarbeiter. Rund um die Uhr.",
   description:
     "Automatisiere Kundenanfragen, Termine und wiederkehrende Büroaufgaben mit einem KI-Agenten, der maßgeschneidert auf dein Unternehmen trainiert ist.",
   keywords: [
+    "YY-AI-Agent",
     "KI-Agentur",
     "KI Mitarbeiter",
     "Arslan AI",
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     "Büroautomatisierung",
     "Business KI",
   ],
-  authors: [{ name: "Arslan AI" }],
+  authors: [{ name: "YY-AI-Agent" }],
 };
 
 export const viewport = {
