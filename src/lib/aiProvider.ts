@@ -28,7 +28,7 @@ function cleanEnv(val?: string): string | undefined {
 
 /**
  * Server-only AI Provider für YY-AI-Agent
- * Verwendet Google Gemini (gemini-1.5-flash) als hocheffizientes, kostengünstiges Standardmodell.
+ * Verwendet Google Gemini (gemini-2.0-flash) als hocheffizientes, kostengünstiges Standardmodell.
  * Maximal token-optimiert:
  * - Native system_instruction
  * - Trunkiertes Verlaufsfenster (max. 2 Vor-Nachrichten)
@@ -47,7 +47,7 @@ export async function generateArslanReply(
 
   // 1. Google Gemini Flash (Empfohlenes Modell für YY-AI-Agent)
   if (geminiKey) {
-    const model = cleanEnv(process.env.GEMINI_MODEL) || "gemini-1.5-flash";
+    const model = cleanEnv(process.env.GEMINI_MODEL) || "gemini-2.0-flash";
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiKey}`;
 
     const contents = [
