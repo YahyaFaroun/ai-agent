@@ -250,11 +250,12 @@ export async function POST(request: Request) {
         });
 
       if (error) {
-        // Hinweis: Kundendaten werden gemäß Datenschutz-Vorgabe NIEMALS in Server-Logs ausgegeben
         return NextResponse.json(
           {
             saved: false,
             code: "DATABASE_ERROR",
+            dbCode: error.code,
+            dbMessage: error.message,
             message:
               "Die Anfrage konnte vorübergehend nicht in der Datenbank gespeichert werden. Bitte versuche es in Kürze erneut.",
           },
