@@ -20,16 +20,6 @@ export default function HeroSection() {
 
       {/* Zentraler Avatar-Bereich – Kopf wird vollständig ohne oberen Beschnitt dargestellt */}
       <div className="relative w-full max-w-[340px] sm:max-w-[460px] md:max-w-[520px] aspect-[460/400] flex items-center justify-center mx-auto px-2 pt-2">
-        {/* Feine konzentrische HUD-Ringe */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute w-[78%] aspect-square rounded-full border border-dashed border-[#ff8c42]/25 animate-spin-slow"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute w-[62%] aspect-square rounded-full border border-amber-500/20 animate-spin-slow-reverse"
-        />
-
         {/* HUD Crosshair-Markierungen */}
         <div
           aria-hidden="true"
