@@ -22,7 +22,7 @@ if (existsSync(".env.local")) {
 }
 
 const key = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
-const model = process.env.GEMINI_MODEL || "gemini-2.0-flash";
+const model = process.env.GEMINI_MODEL || "gemini-3.8-flash";
 
 console.log(`--- GEMINI LIVE TEST ---`);
 console.log(`Target Model: ${model}`);

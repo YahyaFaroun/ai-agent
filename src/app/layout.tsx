@@ -20,13 +20,24 @@ export const metadata: Metadata = {
     "YY-AI-Agent",
     "KI-Agentur",
     "KI Mitarbeiter",
-    "Arslan AI",
     "Automatisierung",
     "Kundenservice KI",
     "Büroautomatisierung",
     "Business KI",
   ],
   authors: [{ name: "YY-AI-Agent" }],
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
 };
 
 export const viewport = {

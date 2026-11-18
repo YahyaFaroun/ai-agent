@@ -12,11 +12,12 @@ interface ChatEntry {
 }
 
 const INITIAL_GREETING =
-  "Hallo, ich bin Arslan, dein digitaler KI-Verkaufsberater. Welche Prozesse in deinem Unternehmen oder Alltag möchtest du mit einem eigenen KI-Agenten automatisieren?";
+  "Hallo! Ich bin Alp Arsalan, dein digitaler KI-Verkaufsberater von YY-AI-Agent. Welche Prozesse in deinem Unternehmen oder Alltag möchtest du mit einem eigenen KI-Agenten automatisieren?";
 
 const QUICK_SUGGESTIONS = [
   "Welche Pakete gibt es?",
-  "Wie läuft die Einrichtung ab?",
+  "Wie funktioniert die Warteliste?",
+  "Welche Systeme kann Alp Arsalan anbinden?",
   "Welches Paket passt zu mir?",
 ];
 
@@ -42,7 +43,7 @@ export default function ArslanChatDemo() {
     const trimmed = userText.trim();
     if (!trimmed || isLoading) return;
 
-    const nowId = Date.now().toString();
+    const nowId = crypto.randomUUID();
     const newEntry: ChatEntry = { id: `${nowId}-u`, role: "user", text: trimmed };
 
     const currentHistory = entries
@@ -66,12 +67,16 @@ export default function ArslanChatDemo() {
         }),
       });
 
-      const data = await res.json();
+      const data = (await res.json().catch(() => ({}))) as { reply?: string };
+      if (!data.reply && !res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
       const replyText =
         data.reply ||
-        "Ich empfehle dir unser 4-stufiges Anfrageformular direkt darunter, um deinen Bedarf exakt abzustimmen.";
+        "Ich empfehle dir unsere 4-stufige Warteliste direkt darunter, um deinen Bedarf exakt abzustimmen.";
 
       const mentionsForm =
+        replyText.toLowerCase().includes("warteliste") ||
         replyText.toLowerCase().includes("formular") ||
         replyText.toLowerCase().includes("paket") ||
         replyText.toLowerCase().includes("starter") ||
@@ -92,7 +97,8 @@ export default function ArslanChatDemo() {
         {
           id: `${nowId}-err`,
           role: "system",
-          text: "Verbindungsfehler. Bitte nutze direkt unser Anfrageformular darunter.",
+          text: "Alp Arsalan ist gerade nicht erreichbar. Bitte versuche es gleich noch einmal oder trage dich direkt in unsere Warteliste darunter ein – wir melden uns persönlich bei dir.",
+          showCta: true,
         },
       ]);
     } finally {
@@ -111,7 +117,7 @@ export default function ArslanChatDemo() {
   };
 
   const scrollToForm = () => {
-    const el = document.getElementById("anfrage");
+    const el = document.getElementById("warteliste") || document.getElementById("anfrage");
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
     }
@@ -120,7 +126,7 @@ export default function ArslanChatDemo() {
   return (
     <section
       id="chat"
-      aria-label="Arslan KI-Chatfeld"
+      aria-label="Alp Arsalan KI-Chatfeld"
       className="relative px-4 sm:px-6 pt-2 pb-12"
     >
       <div className="max-w-3xl mx-auto">
@@ -128,18 +134,23 @@ export default function ArslanChatDemo() {
           {/* Subtle HUD Top Bar */}
           <div className="px-4 sm:px-5 py-3 bg-[#090a0e]/95 border-b border-zinc-800/80 flex items-center justify-between gap-3">
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="relative w-7 h-7 rounded-full overflow-hidden border border-[#ff6b2b]/45 bg-zinc-900 shrink-0">
+              <div className="relative w-7 h-7 rounded-full overflow-hidden border border-[#ff8c42]/45 bg-zinc-900 shrink-0">
                 <Image
                   src="/arslan_avatar_round.png"
-                  alt="Arslan"
+                  alt="Alp Arsalan"
                   width={28}
                   height={28}
                   className="object-cover"
                 />
               </div>
-              <span className="text-xs sm:text-sm font-semibold text-zinc-100 truncate">
-                Arslan · KI-Verkaufsberater
-              </span>
+              <div className="flex items-baseline gap-1.5 min-w-0">
+                <span className="text-xs sm:text-sm font-semibold text-zinc-100 truncate">
+                  Alp Arsalan
+                </span>
+                <span className="text-[11px] text-zinc-400 hidden xs:inline truncate">
+                  · KI-Verkaufsberater (YY-AI-Agent)
+                </span>
+              </div>
               <span className="px-2 py-0.5 rounded-full text-[10px] font-mono tracking-wider uppercase bg-[#ff6b2b]/15 text-[#ff8c42] border border-[#ff6b2b]/35 shrink-0 flex items-center gap-1">
                 <Sparkles className="w-2.5 h-2.5" />
                 Live-Berater
@@ -177,8 +188,20 @@ export default function ArslanChatDemo() {
               if (entry.role === "system") {
                 return (
                   <div key={entry.id} className="flex justify-start">
-                    <div className="max-w-[92%] sm:max-w-[85%] rounded-xl px-3.5 py-2.5 bg-[#160d08]/90 border border-[#ff6b2b]/30 text-xs text-zinc-300 leading-relaxed">
-                      <span>{entry.text}</span>
+                    <div className="max-w-[92%] sm:max-w-[85%] space-y-2">
+                      <div className="rounded-xl px-3.5 py-2.5 bg-[#160d08]/90 border border-[#ff6b2b]/30 text-xs text-zinc-300 leading-relaxed">
+                        <span>{entry.text}</span>
+                      </div>
+                      {entry.showCta && (
+                        <button
+                          type="button"
+                          onClick={scrollToForm}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#ff6b2b]/15 border border-[#ff6b2b]/40 text-xs font-medium text-[#ff8c42] hover:text-white hover:bg-[#ff6b2b]/25 transition-all cursor-pointer"
+                        >
+                          <ArrowDownCircle className="w-3.5 h-3.5" />
+                          <span>Zur Warteliste (Schritt 1 von 4)</span>
+                        </button>
+                      )}
                     </div>
                   </div>
                 );
@@ -189,14 +212,14 @@ export default function ArslanChatDemo() {
                   <div className="w-8 h-8 rounded-full overflow-hidden border border-zinc-700/80 bg-zinc-900 shrink-0 mt-0.5">
                     <Image
                       src="/arslan_avatar_round.png"
-                      alt="Arslan"
+                      alt="Alp Arsalan"
                       width={32}
                       height={32}
                       className="object-cover"
                     />
                   </div>
                   <div className="max-w-[88%] sm:max-w-[82%] space-y-2">
-                    <div className="rounded-2xl rounded-tl-sm px-4 py-3 bg-zinc-900/90 border border-zinc-800/90 text-sm text-zinc-200 leading-relaxed">
+                    <div className="rounded-2xl rounded-tl-sm px-4 py-3 bg-zinc-900/90 border border-zinc-800/90 text-sm text-zinc-200 leading-relaxed whitespace-pre-line">
                       {entry.text}
                     </div>
                     {entry.showCta && (
@@ -206,7 +229,7 @@ export default function ArslanChatDemo() {
                         className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#ff6b2b]/15 border border-[#ff6b2b]/40 text-xs font-medium text-[#ff8c42] hover:text-white hover:bg-[#ff6b2b]/25 transition-all cursor-pointer"
                       >
                         <ArrowDownCircle className="w-3.5 h-3.5" />
-                        <span>Zum Anfrageformular (Schritt 1 von 4)</span>
+                        <span>Zur Warteliste (Schritt 1 von 4)</span>
                       </button>
                     )}
                   </div>
@@ -215,19 +238,19 @@ export default function ArslanChatDemo() {
             })}
 
             {isLoading && (
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-3" role="status" aria-live="polite">
                 <div className="w-8 h-8 rounded-full overflow-hidden border border-zinc-700/80 bg-zinc-900 shrink-0 mt-0.5">
                   <Image
                     src="/arslan_avatar_round.png"
-                    alt="Arslan"
+                    alt="Alp Arsalan"
                     width={32}
                     height={32}
                     className="object-cover"
                   />
                 </div>
                 <div className="rounded-2xl rounded-tl-sm px-4 py-3 bg-zinc-900/90 border border-zinc-800/90 text-xs font-mono text-zinc-400 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#ff6b2b] animate-pulse" />
-                  <span>Arslan berät …</span>
+                  <span className="w-2 h-2 rounded-full bg-[#ff8c42] animate-pulse" />
+                  <span>Alp Arsalan berät …</span>
                 </div>
               </div>
             )}
@@ -260,7 +283,7 @@ export default function ArslanChatDemo() {
           >
             <div className="flex items-center gap-2.5">
               <label htmlFor="arslan-chat-input" className="sr-only">
-                Frage an Arslan stellen
+                Frage an Alp Arsalan stellen
               </label>
               <input
                 id="arslan-chat-input"
@@ -268,8 +291,8 @@ export default function ArslanChatDemo() {
                 maxLength={350}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Frag Arslan zu Paketen, Preisen oder Integrationen …"
-                className="flex-1 min-w-0 bg-zinc-900/90 border border-zinc-800 focus:border-[#ff6b2b]/60 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#ff6b2b]/60 transition-colors"
+                placeholder="Frag Alp Arsalan zu Paketen, Schnittstellen oder der Warteliste …"
+                className="flex-1 min-w-0 bg-zinc-900/90 border border-zinc-800 focus:border-[#ff8c42]/60 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#ff8c42]/60 transition-colors"
               />
               <button
                 type="submit"

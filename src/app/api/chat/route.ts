@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { generateArslanReply, ChatMessage } from "@/lib/aiProvider";
+import { buildFallbackReply } from "@/lib/knowledgeBase";
 
 // Rate-Limiting: Maximal 8 Chat-Anfragen pro IP innerhalb von 10 Minuten
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
@@ -31,7 +32,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         reply:
-          "Du hast in kurzer Zeit viele Nachrichten gesendet. Um Arslan für alle Besucher schnell zu halten, nutze bitte direkt unser Anfrageformular unten.",
+          "Du hast in kurzer Zeit viele Nachrichten gesendet. Um den Chat für alle Besucher schnell zu halten, nutze bitte direkt unser Anfrageformular unten.",
         rateLimited: true,
       },
       { status: 429 }
@@ -62,7 +63,7 @@ export async function POST(request: Request) {
 
   const historyRaw = Array.isArray(body.history) ? body.history : [];
   const sanitizedHistory: ChatMessage[] = historyRaw
-    .slice(-4)
+    .slice(-6)
     .filter((m) => m && (m.role === "user" || m.role === "assistant"))
     .map((m) => ({
       role: m.role,
@@ -78,22 +79,25 @@ export async function POST(request: Request) {
     });
   } catch (err: unknown) {
     const errorMsg = err instanceof Error ? err.message : String(err);
+    const userTexts = [
+      ...sanitizedHistory.filter((m) => m.role === "user").map((m) => m.content),
+      userMessage,
+    ];
 
     // Wenn noch kein Key eingerichtet ist (Vorbereitungsphase)
     if (errorMsg === "NO_API_KEY_CONFIGURED") {
       return NextResponse.json({
-        reply:
-          "Vielen Dank für dein Interesse! Ich berate dich gerne zu unseren Paketen Starter (ab 1.000 €), Business (ab 2.000 €) und Enterprise (ab 5.000 €). Für ein konkretes Angebot nutze gerne unser 4-stufiges Formular direkt darunter.",
+        reply: buildFallbackReply(userTexts),
         unconfigured: true,
       });
     }
 
-    return NextResponse.json(
-      {
-        reply:
-          "Entschuldige, ich konnte deine Anfrage gerade nicht verarbeiten. Bitte nutze unser Anfrageformular direkt darunter.",
-      },
-      { status: 500 }
-    );
+    // Modell nicht erreichbar (Timeout, HTTP-Fehler, leere Antwort):
+    // intern protokollieren, dem Besucher eine sinnvolle Beratung anbieten.
+    console.error("[api/chat] KI-Anbieter nicht verfügbar:", errorMsg);
+    return NextResponse.json({
+      reply: buildFallbackReply(userTexts),
+      fallback: true,
+    });
   }
 }

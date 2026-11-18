@@ -31,9 +31,10 @@ export default function DigitalRainBackground() {
     let height = 0;
     let streams: ColumnStream[] = [];
 
-    const pool = "010123478901893201";
-    const fontSize = 13;
-    const lineStep = 18;
+    // Erweiterter Pool für authentischen Coding- / Terminal-Look (Binär, Hex, Syntax)
+    const pool = "01010101ABCDEF01<>/{}[];:=+*~#$_0123456789";
+    const fontSize = window.innerWidth < 640 ? 15 : 18;
+    const lineStep = window.innerWidth < 640 ? 20 : 24;
 
     const randomDigit = () => pool[Math.floor(Math.random() * pool.length)];
 
@@ -45,24 +46,24 @@ export default function DigitalRainBackground() {
       canvas.height = Math.floor(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      // Sparse column spacing like Saifullah 2050 HUD
-      const colSpacing = width < 640 ? 38 : 48;
+      // Größere Zeichen benötigen angepassten Spaltenabstand
+      const colSpacing = width < 640 ? 32 : 42;
       const count = Math.floor(width / colSpacing);
       streams = [];
 
       for (let i = 0; i < count; i++) {
-        // Leave occasional breathing gaps for authentic sparse look
-        if (i % 5 === 2) continue;
-        const length = 7 + Math.floor(Math.random() * 9);
+        // Gezielte Freiräume für saubere HUD-Optik
+        if (i % 6 === 2) continue;
+        const length = 8 + Math.floor(Math.random() * 12);
         const digits = Array.from({ length }, randomDigit);
         streams.push({
           x: Math.round(i * colSpacing + colSpacing * 0.5),
           y: Math.random() * (height + 300) - 150,
-          speed: 0.45 + Math.random() * 0.65,
+          speed: 0.55 + Math.random() * 0.75,
           length,
           digits,
           tickCounter: 0,
-          mutateEvery: 8 + Math.floor(Math.random() * 16),
+          mutateEvery: 6 + Math.floor(Math.random() * 14),
         });
       }
     };
@@ -82,7 +83,7 @@ export default function DigitalRainBackground() {
       lastTime = now;
 
       ctx.clearRect(0, 0, width, height);
-      ctx.font = `500 ${fontSize}px var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace`;
+      ctx.font = `600 ${fontSize}px "JetBrains Mono", "Fira Code", var(--font-geist-mono), ui-monospace, monospace`;
       ctx.textAlign = "center";
 
       for (let i = 0; i < streams.length; i++) {
@@ -93,13 +94,15 @@ export default function DigitalRainBackground() {
           if (dy < -lineStep || dy > height + lineStep) continue;
 
           if (j === 0) {
-            // Crisp bright silver-warm lead digit at the bottom of the stream
-            ctx.fillStyle = "rgba(244, 236, 228, 0.72)";
+            // Leuchtender Gold-Kopf des Datenstroms
+            ctx.fillStyle = "rgba(255, 238, 185, 0.95)";
           } else if (j <= 2) {
-            ctx.fillStyle = `rgba(255, 122, 56, ${(0.52 - j * 0.1).toFixed(2)})`;
+            // Intensives Terminal-Bernstein
+            ctx.fillStyle = `rgba(255, 140, 66, ${(0.75 - j * 0.15).toFixed(2)})`;
           } else {
-            const fade = Math.max(0.04, (1 - j / s.length) * 0.34);
-            ctx.fillStyle = `rgba(185, 72, 32, ${fade.toFixed(2)})`;
+            // Matrix-Phosphor Auslauf
+            const fade = Math.max(0.06, (1 - j / s.length) * 0.45);
+            ctx.fillStyle = `rgba(215, 95, 30, ${fade.toFixed(2)})`;
           }
 
           ctx.fillText(s.digits[j], s.x, dy);

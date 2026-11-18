@@ -33,16 +33,16 @@ const TASK_OPTIONS = [
 ] as const;
 
 const INTEGRATION_OPTIONS = [
-  "E-Mail",
-  "Google Kalender",
-  "Microsoft 365",
-  "Website",
+  "Gmail / Google Workspace",
+  "Outlook / Microsoft 365",
   "CRM-System",
   "Datenbank",
+  "Website / Web-App",
   "Shopify / Onlineshop",
-  "Google Drive",
-  "WhatsApp",
-  "Telegram",
+  "Google Kalender",
+  "Google Drive / Cloud-Speicher",
+  "WhatsApp Business",
+  "Telegram / Slack",
   "Noch keine",
   "Sonstiges",
 ] as const;
@@ -59,6 +59,13 @@ export default function MultiStepInquiryForm() {
 
   const [integrations, setIntegrations] = useState<string[]>([]);
   const [integrationsOther, setIntegrationsOther] = useState("");
+
+  // Bedingte Detailfelder für konkrete Integrationen
+  const [detailEmail, setDetailEmail] = useState("");
+  const [detailCrm, setDetailCrm] = useState("");
+  const [detailDatabase, setDetailDatabase] = useState("");
+  const [detailWebsite, setDetailWebsite] = useState("");
+  const [detailShop, setDetailShop] = useState("");
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -83,6 +90,19 @@ export default function MultiStepInquiryForm() {
     usageScope === "Geschäftlich" || usageScope === "Beides";
   const hasTasksOther = tasks.includes("Sonstiges");
   const hasIntegrationsOther = integrations.includes("Sonstiges");
+
+  // Erkennung für bedingte Detailfelder
+  const hasEmail = integrations.some(
+    (i) => i.includes("Gmail") || i.includes("Outlook") || i.includes("E-Mail")
+  );
+  const hasCrm = integrations.includes("CRM-System");
+  const hasDatabase = integrations.includes("Datenbank");
+  const hasWebsite = integrations.some((i) => i.includes("Website"));
+  const hasShop = integrations.some(
+    (i) => i.includes("Shopify") || i.includes("Onlineshop")
+  );
+  const hasAnyConditionalDetail =
+    hasEmail || hasCrm || hasDatabase || hasWebsite || hasShop;
 
   const toggleMultiOption = (
     current: string[],
@@ -183,6 +203,16 @@ export default function MultiStepInquiryForm() {
     }
     if (!validateCurrentStep() || !usageScope) return;
 
+    const integrationDetails: Record<string, string> = {};
+    if (detailEmail.trim()) integrationDetails.email = detailEmail.trim();
+    if (detailCrm.trim()) integrationDetails.crm = detailCrm.trim();
+    if (detailDatabase.trim()) integrationDetails.database = detailDatabase.trim();
+    if (detailWebsite.trim()) integrationDetails.website = detailWebsite.trim();
+    if (detailShop.trim()) integrationDetails.shop = detailShop.trim();
+    if (hasIntegrationsOther && integrationsOther.trim()) {
+      integrationDetails.other = integrationsOther.trim();
+    }
+
     const payload: StructuredInquiryPayload = {
       usageScope,
       industry: isBusinessUsage ? industry.trim() : null,
@@ -190,6 +220,8 @@ export default function MultiStepInquiryForm() {
       tasksOther: hasTasksOther ? tasksOther.trim() : null,
       integrations,
       integrationsOther: hasIntegrationsOther ? integrationsOther.trim() : null,
+      integrationDetails:
+        Object.keys(integrationDetails).length > 0 ? integrationDetails : undefined,
       contact: {
         name: name.trim(),
         email: email.trim(),
@@ -217,25 +249,25 @@ export default function MultiStepInquiryForm() {
           status: "saved",
           message:
             data.message ||
-            "Vielen Dank! Deine Anfrage wurde erfolgreich gespeichert.",
+            "Vielen Dank! Du stehst erfolgreich auf der Warteliste von YY-AI-Agent.",
         });
       } else if (data.code === "BACKEND_NOT_CONFIGURED") {
         setSubmitState({
           status: "unconfigured",
           message:
             data.message ||
-            "Aktuell ist noch keine Backend-Anbindung aktiv. Deine Anfrage wurde daher noch nicht übermittelt.",
+            "Aktuell ist noch keine Backend-Anbindung aktiv. Deine Angaben wurden zwischengespeichert.",
           inquiry: data.inquiry || payload,
         });
       } else {
         setStepError(
           data.message ||
-            "Die Anfrage konnte nicht gespeichert werden. Bitte prüfe deine Angaben."
+            "Die Anmeldung zur Warteliste konnte nicht gespeichert werden. Bitte prüfe deine Angaben."
         );
       }
     } catch {
       setStepError(
-        "Verbindungsfehler: Deine Anfrage konnte nicht übermittelt werden."
+        "Verbindungsfehler: Deine Anmeldung konnte nicht übermittelt werden."
       );
     } finally {
       setIsSubmitting(false);
@@ -250,6 +282,11 @@ export default function MultiStepInquiryForm() {
     setTasksOther("");
     setIntegrations([]);
     setIntegrationsOther("");
+    setDetailEmail("");
+    setDetailCrm("");
+    setDetailDatabase("");
+    setDetailWebsite("");
+    setDetailShop("");
     setName("");
     setEmail("");
     setPhone("");
@@ -262,16 +299,18 @@ export default function MultiStepInquiryForm() {
   const stepTitles: Record<1 | 2 | 3 | 4, string> = {
     1: "Einsatzbereich",
     2: "Gewünschte Aufgaben",
-    3: "Integrationen",
-    4: "Kontaktdaten",
+    3: "Integrationen & Schnittstellen",
+    4: "Kontaktdaten für die Warteliste",
   };
 
   return (
     <section
-      id="anfrage"
-      aria-labelledby="inquiry-heading"
+      id="warteliste"
+      aria-labelledby="waitlist-heading"
       className="relative px-4 sm:px-6 py-10"
     >
+      {/* Abwärtskompatibler Anker für bestehende Links */}
+      <span id="anfrage" className="sr-only" aria-hidden="true" />
       <div className="max-w-3xl mx-auto">
         <div className="hud-panel rounded-2xl border border-zinc-800/90 p-5 sm:p-8 shadow-[0_12px_48px_rgba(0,0,0,0.75)]">
           {submitState.status === "saved" ? (
@@ -281,10 +320,13 @@ export default function MultiStepInquiryForm() {
               </div>
               <div className="space-y-2">
                 <h2 className="text-xl sm:text-2xl font-bold text-white">
-                  Anfrage gespeichert
+                  Du stehst auf der Warteliste
                 </h2>
                 <p className="text-sm text-zinc-300 max-w-md mx-auto leading-relaxed">
                   {submitState.message}
+                </p>
+                <p className="text-xs text-zinc-500 max-w-md mx-auto leading-relaxed">
+                  Wir analysieren deine Anforderungen und melden uns persönlich per E-Mail bei dir, sobald dein Platz im Onboarding bereitsteht.
                 </p>
               </div>
               <button
@@ -292,7 +334,7 @@ export default function MultiStepInquiryForm() {
                 onClick={resetAll}
                 className="metallic-button px-5 py-2.5 rounded-xl text-xs font-semibold text-zinc-200 hover:text-white cursor-pointer"
               >
-                Neue Anfrage erstellen
+                Weitere Person auf die Warteliste setzen
               </button>
             </div>
           ) : submitState.status === "unconfigured" ? (
@@ -389,10 +431,10 @@ export default function MultiStepInquiryForm() {
                 <div className="flex items-center justify-between gap-4">
                   <div>
                     <span className="text-[11px] font-mono uppercase tracking-widest text-[#ff8c42] block">
-                      KI-Agenten anfragen
+                      Warteliste &amp; Onboarding
                     </span>
                     <h2
-                      id="inquiry-heading"
+                      id="waitlist-heading"
                       className="text-lg sm:text-xl font-bold text-white mt-0.5"
                     >
                       {stepTitles[step]}
@@ -401,7 +443,7 @@ export default function MultiStepInquiryForm() {
 
                   <div
                     aria-label={`Schritt ${step} von 4`}
-                    className="px-3 py-1 rounded-full bg-zinc-900 border border-[#ff6b2b]/40 font-mono text-xs font-semibold text-zinc-100 shrink-0"
+                    className="px-3 py-1 rounded-full bg-zinc-900 border border-[#ff8c42]/40 font-mono text-xs font-semibold text-zinc-100 shrink-0"
                   >
                     {step}/4
                   </div>
@@ -601,6 +643,115 @@ export default function MultiStepInquiryForm() {
                     })}
                   </div>
 
+                  {/* Bedingte Eingabefelder für ausgewählte Schnittstellen */}
+                  {hasAnyConditionalDetail && (
+                    <div className="rounded-xl p-4 sm:p-5 bg-zinc-950/70 border border-zinc-800 space-y-3.5 pt-3.5">
+                      <div className="pb-1 border-b border-zinc-800/80">
+                        <span className="text-[11px] font-mono uppercase tracking-wider text-[#ff8c42] block">
+                          Konkrete Angaben zu deinen Systemen (optional)
+                        </span>
+                        <p className="text-xs text-zinc-400 mt-0.5">
+                          Hilft uns, die technische Machbarkeit vorab exakt abzustimmen.
+                        </p>
+                      </div>
+
+                      {hasEmail && (
+                        <div className="space-y-1.5">
+                          <label
+                            htmlFor="detail-email"
+                            className="block text-xs font-mono text-zinc-300"
+                          >
+                            E-Mail-Postfach / Provider
+                          </label>
+                          <input
+                            id="detail-email"
+                            type="text"
+                            value={detailEmail}
+                            onChange={(e) => setDetailEmail(e.target.value)}
+                            placeholder="z. B. Google Workspace / Gmail, Microsoft 365, eigener IMAP/Exchange …"
+                            className="w-full bg-zinc-900/90 border border-zinc-800 focus:border-[#ff8c42]/70 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#ff8c42]/60"
+                          />
+                        </div>
+                      )}
+
+                      {hasCrm && (
+                        <div className="space-y-1.5">
+                          <label
+                            htmlFor="detail-crm"
+                            className="block text-xs font-mono text-zinc-300"
+                          >
+                            Welches CRM-System nutzt du?
+                          </label>
+                          <input
+                            id="detail-crm"
+                            type="text"
+                            value={detailCrm}
+                            onChange={(e) => setDetailCrm(e.target.value)}
+                            placeholder="z. B. HubSpot, Salesforce, Pipedrive, Zoho, OnOffice, Eigenentwicklung …"
+                            className="w-full bg-zinc-900/90 border border-zinc-800 focus:border-[#ff8c42]/70 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#ff8c42]/60"
+                          />
+                        </div>
+                      )}
+
+                      {hasDatabase && (
+                        <div className="space-y-1.5">
+                          <label
+                            htmlFor="detail-database"
+                            className="block text-xs font-mono text-zinc-300"
+                          >
+                            Welche Datenbank oder Datenquelle?
+                          </label>
+                          <input
+                            id="detail-database"
+                            type="text"
+                            value={detailDatabase}
+                            onChange={(e) => setDetailDatabase(e.target.value)}
+                            placeholder="z. B. PostgreSQL, Supabase, MySQL, Notion, Airtable, REST-API …"
+                            className="w-full bg-zinc-900/90 border border-zinc-800 focus:border-[#ff8c42]/70 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#ff8c42]/60"
+                          />
+                        </div>
+                      )}
+
+                      {hasWebsite && (
+                        <div className="space-y-1.5">
+                          <label
+                            htmlFor="detail-website"
+                            className="block text-xs font-mono text-zinc-300"
+                          >
+                            Website-URL &amp; CMS / System
+                          </label>
+                          <input
+                            id="detail-website"
+                            type="text"
+                            value={detailWebsite}
+                            onChange={(e) => setDetailWebsite(e.target.value)}
+                            placeholder="z. B. https://deine-domain.de (WordPress, Webflow, Next.js, Custom) …"
+                            className="w-full bg-zinc-900/90 border border-zinc-800 focus:border-[#ff8c42]/70 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#ff8c42]/60"
+                          />
+                        </div>
+                      )}
+
+                      {hasShop && (
+                        <div className="space-y-1.5">
+                          <label
+                            htmlFor="detail-shop"
+                            className="block text-xs font-mono text-zinc-300"
+                          >
+                            Shop-System &amp; Plattform
+                          </label>
+                          <input
+                            id="detail-shop"
+                            type="text"
+                            value={detailShop}
+                            onChange={(e) => setDetailShop(e.target.value)}
+                            placeholder="z. B. Shopify, WooCommerce, Shopware, Magento …"
+                            className="w-full bg-zinc-900/90 border border-zinc-800 focus:border-[#ff8c42]/70 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#ff8c42]/60"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                   {hasIntegrationsOther && (
                     <div className="space-y-2 pt-1">
                       <label
@@ -630,7 +781,7 @@ export default function MultiStepInquiryForm() {
               {step === 4 && (
                 <div className="space-y-4">
                   <p className="text-xs sm:text-sm text-zinc-400">
-                    Wie dürfen wir dich zu deiner Anfrage kontaktieren?
+                    Wie dürfen wir dich für die Warteliste kontaktieren?
                   </p>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -755,7 +906,7 @@ export default function MultiStepInquiryForm() {
                   >
                     <Send className="w-4 h-4" />
                     <span>
-                      {isSubmitting ? "Wird geprüft …" : "Anfrage absenden"}
+                      {isSubmitting ? "Wird eingetragen …" : "Auf die Warteliste setzen"}
                     </span>
                   </button>
                 )}

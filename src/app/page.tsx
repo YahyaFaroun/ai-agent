@@ -13,13 +13,13 @@ export default function Home() {
       <DigitalRainBackground />
 
       <main className="flex-1 relative z-10">
-        {/* 1. Arslan-Avatar mit Matrix-Hintergrund */}
+        {/* 1. Alp Arsalan Avatar mit Matrix-Hintergrund */}
         <HeroSection />
 
-        {/* 2. Direkt darunter das KI-Chatfeld */}
+        {/* 2. Direkt darunter das KI-Chatfeld mit Alp Arsalan */}
         <ArslanChatDemo />
 
-        {/* 3. Mehrstufiges Anfrageformular (4 Schritte) */}
+        {/* 3. Wartelisten-Formular (4 Schritte mit konkreten Integrationsfeldern) */}
         <MultiStepInquiryForm />
 
         {/* 4. Drei KI-Pakete */}

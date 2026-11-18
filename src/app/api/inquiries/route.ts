@@ -8,6 +8,7 @@ export interface StructuredInquiryPayload {
   tasksOther: string | null;
   integrations: string[];
   integrationsOther: string | null;
+  integrationDetails?: Record<string, string>;
   contact: {
     name: string;
     email: string;
@@ -170,6 +171,35 @@ export async function POST(request: Request) {
     }
   }
 
+  // 6b. Optionale bedingte Integrationsdetails (z. B. konkretes CRM, DB, E-Mail/Gmail, Website)
+  const rawDetails =
+    body.integrationDetails && typeof body.integrationDetails === "object"
+      ? (body.integrationDetails as Record<string, unknown>)
+      : {};
+  const sanitizedDetails: Record<string, string> = {};
+  for (const [key, val] of Object.entries(rawDetails)) {
+    if (typeof val === "string" && val.trim()) {
+      sanitizedDetails[key.substring(0, 50)] = val.trim().substring(0, 200);
+    }
+  }
+
+  // Zusätzliche Angaben für die Textspalte integrations_other aufbereiten (für kompakte Tabellenansichten)
+  const detailParts: string[] = [];
+  if (sanitizedDetails.email) detailParts.push(`E-Mail: ${sanitizedDetails.email}`);
+  if (sanitizedDetails.crm) detailParts.push(`CRM: ${sanitizedDetails.crm}`);
+  if (sanitizedDetails.database) detailParts.push(`DB: ${sanitizedDetails.database}`);
+  if (sanitizedDetails.website) detailParts.push(`Web: ${sanitizedDetails.website}`);
+  if (sanitizedDetails.shop) detailParts.push(`Shop: ${sanitizedDetails.shop}`);
+  if (sanitizedDetails.other) detailParts.push(`Weitere: ${sanitizedDetails.other}`);
+
+  let combinedIntegrationsOther = integrationsOther;
+  if (detailParts.length > 0) {
+    const detailsSummary = detailParts.join(" | ");
+    combinedIntegrationsOther = integrationsOther
+      ? `${integrationsOther} [Details: ${detailsSummary}]`.substring(0, 500)
+      : detailsSummary.substring(0, 500);
+  }
+
   // 7. Validierung Schritt 4: Kontaktdaten & Pflicht-Einwilligung
   const nameRaw = (body.contact?.name ?? "").trim();
   const emailRaw = (body.contact?.email ?? "").trim();
@@ -210,7 +240,8 @@ export async function POST(request: Request) {
     tasks,
     tasksOther,
     integrations,
-    integrationsOther,
+    integrationsOther: combinedIntegrationsOther,
+    integrationDetails: Object.keys(sanitizedDetails).length > 0 ? sanitizedDetails : undefined,
     contact: {
       name,
       email,
@@ -233,19 +264,20 @@ export async function POST(request: Request) {
           tasks,
           tasks_other: tasksOther,
           integrations,
-          integrations_other: integrationsOther,
+          integrations_other: combinedIntegrationsOther,
           name,
           email,
           phone,
           consent: true,
           consented_at: consentedAt,
           status: "neu",
-          source: "website",
+          source: "warteliste",
           priority: "normal",
-          assigned_agent: "arslan",
+          assigned_agent: "alp_arsalan",
           metadata: {
-            source: "web_form",
-            version: "v2",
+            source: "web_waitlist",
+            version: "v3",
+            integration_details: sanitizedDetails,
           },
         });
 
@@ -256,7 +288,7 @@ export async function POST(request: Request) {
             saved: false,
             code: "DATABASE_ERROR",
             message:
-              "Die Anfrage konnte vorübergehend nicht in der Datenbank gespeichert werden. Bitte versuche es in Kürze erneut.",
+              "Die Anmeldung zur Warteliste konnte vorübergehend nicht gespeichert werden. Bitte versuche es in Kürze erneut.",
           },
           { status: 500 }
         );
@@ -264,7 +296,7 @@ export async function POST(request: Request) {
 
       return NextResponse.json({
         saved: true,
-        message: "Vielen Dank! Deine Anfrage wurde erfolgreich gespeichert.",
+        message: "Vielen Dank! Du stehst erfolgreich auf der Warteliste von YY-AI-Agent.",
       });
     } catch {
       return NextResponse.json(
