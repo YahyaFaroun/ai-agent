@@ -5,40 +5,64 @@ import { ChevronDown } from "lucide-react";
 
 const FAQ_ITEMS = [
   {
-    topic: "KI-Agenten",
-    question: "Was ist ein KI-Agent?",
+    topic: "Unterschied",
+    question: "Was unterscheidet meinen KI-Assistenten von ChatGPT?",
     answer:
-      "Ein KI-Agent ist ein digitales System auf Basis moderner Sprachmodelle, das definierte Aufgaben nach klaren Vorgaben unterstützt oder automatisiert bearbeitet – abgestimmt auf deinen jeweiligen Einsatzbereich.",
+      "Dein KI-Assistent wird individuell auf dich, deine Projekte und deine Arbeitsabläufe eingerichtet. Er kann mit deinen bestehenden Werkzeugen verbunden werden und dich gezielt bei deinen Aufgaben unterstützen.",
   },
   {
-    topic: "Einsatzmöglichkeiten",
-    question: "Welche Aufgaben kann ein KI-Agent übernehmen?",
+    topic: "Aufgaben",
+    question: "Was kann meine KI für mich übernehmen?",
     answer:
-      "Je nach Konfiguration kann der Agent unter anderem Kundenanfragen vorstrukturieren, E-Mails bearbeiten, Termine koordinieren, Dokumente vorbereiten, Informationen recherchieren und wiederkehrende Abläufe automatisieren.",
+      "Von Recherche, E-Mails und Dokumenten über Marketing und Projektmanagement bis hin zur Automatisierung ganzer Geschäftsprozesse. Der Funktionsumfang richtet sich nach deinem Leistungspaket.",
   },
   {
-    topic: "Integrationen",
-    question: "Welche bestehenden Systeme lassen sich anbinden?",
+    topic: "Vorkenntnisse",
+    question: "Benötige ich technische Vorkenntnisse?",
     answer:
-      "Bestehende Programme und Kanäle wie E-Mail, Kalender, Website, CRM-Systeme, Datenbanken, Onlineshops oder Messenger lassen sich einbinden, sofern entsprechende Schnittstellen verfügbar sind.",
+      "Nein. Wir übernehmen die technische Einrichtung und erklären dir, wie du deine KI im Alltag nutzt.",
   },
   {
     topic: "Laufende Kosten",
-    question: "Fallen neben der Einrichtung laufende Kosten an?",
+    question: "Welche laufenden Kosten entstehen?",
     answer:
-      "Je nach gewählter technischer Infrastruktur, Nutzungsintensität der Sprachmodelle und einer optionalen laufenden Betreuung können laufende Betriebskosten entstehen. Alle Konditionen werden vorab transparent und individuell abgestimmt.",
+      "Die Kosten für KI-Modelle und gegebenenfalls Hosting trägst du direkt über deine eigenen Anbieterzugänge.",
   },
   {
-    topic: "Einrichtung",
-    question: "Wie läuft die Einrichtung ab?",
+    topic: "Schnittstellen",
+    question: "Welche Programme lassen sich anbinden?",
     answer:
-      "Auf Grundlage deiner Anfrage besprechen wir die gewünschten Aufgaben und Schnittstellen, definieren den konkreten Funktionsumfang und richten deinen KI-Agenten anschließend individuell für deinen Bedarf ein.",
+      "Beispielsweise Google Drive, Gmail, Google Kalender, Telegram, CRM-Systeme, Onlineshops und Datenbanken. Weitere Schnittstellen sind nach Absprache möglich.",
   },
   {
     topic: "Datenschutz",
-    question: "Wie wird der Datenschutz berücksichtigt?",
+    question: "Was passiert mit meinen Daten?",
     answer:
-      "Bei der Konzeption und Auswahl der technischen Komponenten werden die Anforderungen der DSGVO berücksichtigt. Welche Systeme und Datenverarbeitungen konkret zum Einsatz kommen, wird vor der Umsetzung gemeinsam festgelegt.",
+      "Du behältst die Kontrolle über deine eigenen Konten und Zugänge. Die Datenverarbeitung richtet sich nach den eingesetzten Diensten und der gewählten Infrastruktur.",
+  },
+  {
+    topic: "Dauer",
+    question: "Wie lange dauert die Einrichtung?",
+    answer:
+      "KI-Assistent: 3–5 Tage. KI-Agent 24/7: 14–30 Tage. KI-Unternehmenslösungen: 14–30 Tage, abhängig vom Projektumfang.",
+  },
+  {
+    topic: "Erweiterung",
+    question: "Kann ich meine KI später erweitern?",
+    answer:
+      "Ja. Zusätzliche Funktionen, Schnittstellen und Automatisierungen können nachträglich ergänzt werden.",
+  },
+  {
+    topic: "Support",
+    question: "Benötige ich einen Supportvertrag?",
+    answer:
+      "Beim KI-Assistenten ist kein Supportvertrag erforderlich. Für den KI-Agenten 24/7 bieten wir Support ab 100 € monatlich und für KI-Unternehmenslösungen ab 200 € monatlich an.",
+  },
+  {
+    topic: "Ablauf",
+    question: "Wie funktioniert die Warteliste?",
+    answer:
+      "Du trägst dich unverbindlich ein und beschreibst deine Anforderungen. Anschließend kontaktieren wir dich persönlich, um die passende Lösung zu besprechen.",
   },
 ] as const;
 

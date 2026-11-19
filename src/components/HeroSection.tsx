@@ -60,6 +60,86 @@ export default function HeroSection() {
       >
         <div className="w-10 h-full rounded-full bg-gradient-to-r from-[#ff8c42] via-[#ffb07a] to-[#ff6b2b]" />
       </div>
+
+      {/* Positionierung & Website-Texte */}
+      <div className="mt-8 sm:mt-10 text-center max-w-3xl mx-auto px-4 space-y-4">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white leading-tight">
+          Deine eigene KI. <br className="hidden sm:inline" />
+          <span className="text-metallic">Für dein Leben.</span>{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff8c42] via-[#ffb07a] to-[#ff6b2b]">
+            Für dein Business.
+          </span>
+        </h1>
+
+        <p className="text-sm sm:text-base text-zinc-300 leading-relaxed max-w-2xl mx-auto">
+          Ob persönlicher KI-Assistent, autonomer KI-Mitarbeiter oder intelligente Unternehmenslösung – wir entwickeln deine KI passend zu deinen Aufgaben, Zielen und Arbeitsabläufen.
+        </p>
+
+        {/* Zentrale Verkaufsargumente */}
+        <div className="pt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 text-left">
+          <div className="p-3 rounded-xl bg-zinc-900/70 border border-zinc-800/80 shadow-sm">
+            <span className="text-xs font-bold text-zinc-100 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#ff8c42]" />
+              Persönliches Gedächtnis
+            </span>
+            <span className="text-xs text-zinc-400 block mt-1 leading-snug">
+              Eine KI, die dich und deine Projekte kennt.
+            </span>
+          </div>
+
+          <div className="p-3 rounded-xl bg-zinc-900/70 border border-zinc-800/80 shadow-sm">
+            <span className="text-xs font-bold text-zinc-100 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#ff8c42]" />
+              Automatisierung
+            </span>
+            <span className="text-xs text-zinc-400 block mt-1 leading-snug">
+              Weniger Routinearbeit, mehr Zeit fürs Wesentliche.
+            </span>
+          </div>
+
+          <div className="p-3 rounded-xl bg-zinc-900/70 border border-zinc-800/80 shadow-sm">
+            <span className="text-xs font-bold text-zinc-100 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#ff8c42]" />
+              Vernetzte Systeme
+            </span>
+            <span className="text-xs text-zinc-400 block mt-1 leading-snug">
+              Deine Werkzeuge und Programme arbeiten zusammen.
+            </span>
+          </div>
+
+          <div className="p-3 rounded-xl bg-zinc-900/70 border border-zinc-800/80 shadow-sm">
+            <span className="text-xs font-bold text-zinc-100 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#ff8c42]" />
+              Individuelle Lösungen
+            </span>
+            <span className="text-xs text-zinc-400 block mt-1 leading-snug">
+              Exakt angepasst an deine spezifischen Anforderungen.
+            </span>
+          </div>
+        </div>
+
+        {/* Anwendungsbereiche */}
+        <div className="pt-2 flex flex-wrap items-center justify-center gap-1.5 text-xs">
+          <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-500 mr-1">
+            Anwendungsbereiche:
+          </span>
+          {[
+            "Büro & Organisation",
+            "Recherche & Marktanalysen",
+            "Marketing & Content",
+            "Projektmanagement",
+            "Softwareentwicklung",
+            "Prozessautomatisierung",
+          ].map((tag) => (
+            <span
+              key={tag}
+              className="px-2.5 py-0.5 rounded-full bg-zinc-900/80 border border-zinc-800 text-zinc-300 font-mono text-[11px]"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

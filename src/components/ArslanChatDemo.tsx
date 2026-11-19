@@ -12,13 +12,13 @@ interface ChatEntry {
 }
 
 const INITIAL_GREETING =
-  "Hallo! Ich bin Alp Arsalan, dein digitaler KI-Verkaufsberater von YY-AI-Agent. Welche Prozesse in deinem Unternehmen oder Alltag möchtest du mit einem eigenen KI-Agenten automatisieren?";
+  "Hallo! Ich bin Alp Arsalan, dein KI-Unternehmensberater von YY-AI-Agent. Welche Prozesse in deinem Unternehmen oder Alltag möchtest du mit einer maßgeschneiderten KI automatisieren?";
 
 const QUICK_SUGGESTIONS = [
   "Welche Pakete gibt es?",
+  "Was unterscheidet euch von ChatGPT?",
+  "Welche Lösung passt zu meiner Branche?",
   "Wie funktioniert die Warteliste?",
-  "Welche Systeme kann Alp Arsalan anbinden?",
-  "Welches Paket passt zu mir?",
 ];
 
 export default function ArslanChatDemo() {
@@ -288,10 +288,10 @@ export default function ArslanChatDemo() {
               <input
                 id="arslan-chat-input"
                 type="text"
-                maxLength={350}
+                maxLength={600}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Frag Alp Arsalan zu Paketen, Schnittstellen oder der Warteliste …"
+                placeholder="Frag Alp Arsalan zu Paketen, Branchenlösungen oder der Warteliste …"
                 className="flex-1 min-w-0 bg-zinc-900/90 border border-zinc-800 focus:border-[#ff8c42]/60 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#ff8c42]/60 transition-colors"
               />
               <button

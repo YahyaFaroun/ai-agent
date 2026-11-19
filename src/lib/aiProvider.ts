@@ -27,11 +27,11 @@ function cleanEnv(val?: string): string | undefined {
 }
 
 // Abbruch, falls der Modellanbieter nicht rechtzeitig antwortet
-const REQUEST_TIMEOUT_MS = 12000;
-// Genug Kontext für individuelle Beratung, aber weiterhin token-sparsam
-const HISTORY_WINDOW = 6;
-const MAX_CHARS_PER_MESSAGE = 350;
-const MAX_OUTPUT_TOKENS = 260;
+const REQUEST_TIMEOUT_MS = 15000;
+// Ausreichend Kontext für mehrstufige geschäftliche Beratungsgespräche
+const HISTORY_WINDOW = 10;
+const MAX_CHARS_PER_MESSAGE = 600;
+const MAX_OUTPUT_TOKENS = 450;
 
 // Standardmodelle (per GEMINI_MODEL / GEMINI_FALLBACK_MODEL überschreibbar).
 // gemini-2.5-flash ist für diesen Schlüssel nicht mehr freigegeben (HTTP 404,
