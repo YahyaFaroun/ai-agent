@@ -1,35 +1,39 @@
 import DigitalRainBackground from "@/components/DigitalRainBackground";
 import HeroSection from "@/components/HeroSection";
 import ArslanChatDemo from "@/components/ArslanChatDemo";
-import MultiStepInquiryForm from "@/components/MultiStepInquiryForm";
+import PositioningSection from "@/components/PositioningSection";
 import PricingSection from "@/components/PricingSection";
+import MultiStepInquiryForm from "@/components/MultiStepInquiryForm";
 import FaqSection from "@/components/FaqSection";
 import LegalLinks from "@/components/LegalLinks";
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-[#050507] text-zinc-100 flex flex-col overflow-x-hidden selection:bg-[#ff6b2b] selection:text-white">
-      {/* Animierte Matrix-Zahlen im Hintergrund */}
+    <div className="relative min-h-screen bg-[#060709] text-zinc-100 flex flex-col overflow-x-hidden selection:bg-[#3ECF8E] selection:text-black font-mono">
+      {/* Animierte Matrix-Zahlen im Hintergrund in Supabase-Grün (#3ECF8E) */}
       <DigitalRainBackground />
 
       <main className="flex-1 relative z-10">
-        {/* 1. Alp Arsalan Avatar mit Matrix-Hintergrund */}
+        {/* 1. Alp Arsalan Avatar mit Bereitschaftsanzeige */}
         <HeroSection />
 
-        {/* 2. Direkt darunter das KI-Chatfeld mit Alp Arsalan */}
+        {/* 2. Chatfenster direkt unter dem Avatar und der Bereitschaftsanzeige */}
         <ArslanChatDemo />
 
-        {/* 3. Wartelisten-Formular (4 Schritte mit konkreten Integrationsfeldern) */}
-        <MultiStepInquiryForm />
+        {/* 3. Positionierung & zentrale Verkaufsargumente */}
+        <PositioningSection />
 
-        {/* 4. Drei KI-Pakete */}
+        {/* 4. Leistungspakete (vor dem Wartelistenformular positioniert) */}
         <PricingSection />
 
-        {/* 5. Kompakter FAQ-Bereich */}
+        {/* 5. Wartelisten-Formular (4 Schritte mit Paketauswahl & Integrationsfeldern) */}
+        <MultiStepInquiryForm />
+
+        {/* 6. FAQ-Bereich mit allen 10 Fragen */}
         <FaqSection />
       </main>
 
-      {/* 6. Unauffällige Links zu Impressum und Datenschutz */}
+      {/* 7. Footer mit Links zu Impressum und Datenschutz */}
       <LegalLinks />
     </div>
   );

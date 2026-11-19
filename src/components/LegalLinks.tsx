@@ -4,7 +4,7 @@ export default function LegalLinks() {
   return (
     <div
       aria-label="Rechtliche Hinweise"
-      className="relative z-10 px-4 pt-6 pb-10 flex items-center justify-center gap-4 text-xs text-zinc-600"
+      className="relative z-10 px-4 pt-6 pb-10 flex items-center justify-center gap-4 text-xs font-mono text-zinc-600"
     >
       <Link
         href="/impressum"

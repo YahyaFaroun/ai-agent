@@ -31,7 +31,7 @@ export default function DigitalRainBackground() {
     let height = 0;
     let streams: ColumnStream[] = [];
 
-    // Erweiterter Pool für authentischen Coding- / Terminal-Look (Binär, Hex, Syntax)
+    // Erweiterter Pool für authentischen Coding-Look (Binär, Hex, Syntax)
     const pool = "01010101ABCDEF01<>/{}[];:=+*~#$_0123456789";
     const fontSize = window.innerWidth < 640 ? 15 : 18;
     const lineStep = window.innerWidth < 640 ? 20 : 24;
@@ -83,7 +83,7 @@ export default function DigitalRainBackground() {
       lastTime = now;
 
       ctx.clearRect(0, 0, width, height);
-      ctx.font = `600 ${fontSize}px "JetBrains Mono", "Fira Code", var(--font-geist-mono), ui-monospace, monospace`;
+      ctx.font = `600 ${fontSize}px "JetBrains Mono", var(--font-jetbrains-mono), ui-monospace, monospace`;
       ctx.textAlign = "center";
 
       for (let i = 0; i < streams.length; i++) {
@@ -94,15 +94,15 @@ export default function DigitalRainBackground() {
           if (dy < -lineStep || dy > height + lineStep) continue;
 
           if (j === 0) {
-            // Leuchtender Gold-Kopf des Datenstroms
-            ctx.fillStyle = "rgba(255, 238, 185, 0.95)";
+            // Leuchtender Kopf des Datenstroms (Supabase-Grün Highlight)
+            ctx.fillStyle = "rgba(235, 255, 245, 1.0)";
           } else if (j <= 2) {
-            // Intensives Terminal-Bernstein
-            ctx.fillStyle = `rgba(255, 140, 66, ${(0.75 - j * 0.15).toFixed(2)})`;
+            // Intensives Supabase-Grün (#3ECF8E: 62, 207, 142)
+            ctx.fillStyle = `rgba(62, 207, 142, ${(0.96 - j * 0.12).toFixed(2)})`;
           } else {
-            // Matrix-Phosphor Auslauf
-            const fade = Math.max(0.06, (1 - j / s.length) * 0.45);
-            ctx.fillStyle = `rgba(215, 95, 30, ${fade.toFixed(2)})`;
+            // Matrix-Phosphor Auslauf (sattes, gut sichtbares Emerald/Green)
+            const fade = Math.max(0.14, (1 - j / s.length) * 0.72);
+            ctx.fillStyle = `rgba(16, 185, 129, ${fade.toFixed(2)})`;
           }
 
           ctx.fillText(s.digits[j], s.x, dy);
@@ -136,7 +136,7 @@ export default function DigitalRainBackground() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-0 h-full w-full opacity-80"
+      className="pointer-events-none fixed inset-0 z-0 h-full w-full opacity-95"
     />
   );
 }

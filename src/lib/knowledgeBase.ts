@@ -25,7 +25,7 @@ export interface PricingPackage {
 export const ARSLAN_PACKAGES: PricingPackage[] = [
   {
     name: "KI-Assistent",
-    badge: "Persönlich",
+    badge: "Empfohlen",
     priceFrom: "1.000 €",
     description: "Persönlicher KI-Assistent passend zu deinen Aufgaben, Zielen und Arbeitsabläufen.",
     setupDuration: "3–5 Tage",
@@ -44,7 +44,7 @@ export const ARSLAN_PACKAGES: PricingPackage[] = [
   },
   {
     name: "KI-Agent 24/7",
-    badge: "Empfohlen",
+    badge: "Autonom",
     priceFrom: "ab 3.000 €",
     description: "Autonomer KI-Mitarbeiter im durchgehenden 24/7-Serverbetrieb mit eigenem Web-Dashboard.",
     setupDuration: "14–30 Tage",

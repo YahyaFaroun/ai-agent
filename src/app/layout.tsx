@@ -1,15 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
 });
 
 export const metadata: Metadata = {
@@ -43,7 +38,7 @@ export const metadata: Metadata = {
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#050507",
+  themeColor: "#080808",
 };
 
 export default function RootLayout({
@@ -54,9 +49,9 @@ export default function RootLayout({
   return (
     <html
       lang="de"
-      className={`${geistSans.variable} ${geistMono.variable} scroll-smooth antialiased dark`}
+      className={`${jetbrainsMono.variable} scroll-smooth antialiased dark`}
     >
-      <body className="min-h-screen bg-[#050507] text-zinc-100 flex flex-col font-sans selection:bg-[#ff6b2b] selection:text-white">
+      <body className="min-h-screen bg-[#060709] text-zinc-100 flex flex-col font-mono selection:bg-[#3ECF8E] selection:text-black">
         {children}
       </body>
     </html>

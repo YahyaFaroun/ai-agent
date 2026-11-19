@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabaseServer";
 
 export interface StructuredInquiryPayload {
+  selectedPackage?: string;
   usageScope: "Privat" | "Geschäftlich" | "Beides";
   industry: string | null;
   tasks: string[];
@@ -233,12 +234,19 @@ export async function POST(request: Request) {
   }
 
   const consentedAt = new Date().toISOString();
+  const selectedPackage = body.selectedPackage ? String(body.selectedPackage).trim().substring(0, 100) : "Nicht angegeben";
+
+  // Paketangabe auch in tasks_other dokumentieren für direkte Sichtbarkeit in einfachen Tabellenansichten
+  const combinedTasksOther = tasksOther
+    ? `${tasksOther} [Gewähltes Paket: ${selectedPackage}]`.substring(0, 500)
+    : `[Gewähltes Paket: ${selectedPackage}]`;
 
   const structuredInquiry: StructuredInquiryPayload = {
+    selectedPackage,
     usageScope,
     industry,
     tasks,
-    tasksOther,
+    tasksOther: combinedTasksOther,
     integrations,
     integrationsOther: combinedIntegrationsOther,
     integrationDetails: Object.keys(sanitizedDetails).length > 0 ? sanitizedDetails : undefined,
@@ -262,7 +270,7 @@ export async function POST(request: Request) {
           scope: usageScope,
           industry,
           tasks,
-          tasks_other: tasksOther,
+          tasks_other: combinedTasksOther,
           integrations,
           integrations_other: combinedIntegrationsOther,
           name,
@@ -276,7 +284,9 @@ export async function POST(request: Request) {
           assigned_agent: "alp_arsalan",
           metadata: {
             source: "web_waitlist",
-            version: "v3",
+            version: "v4_terminal",
+            package: selectedPackage,
+            selected_package: selectedPackage,
             integration_details: sanitizedDetails,
           },
         });

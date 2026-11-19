@@ -73,30 +73,31 @@ export default function FaqSection() {
     <section
       id="faq"
       aria-labelledby="faq-heading"
-      className="relative px-4 sm:px-6 py-10"
+      className="relative px-4 sm:px-6 py-14"
     >
-      <div className="max-w-3xl mx-auto space-y-4">
+      {/* Bessere Desktop-Breite mit max-w-4xl lg:max-w-5xl */}
+      <div className="max-w-4xl lg:max-w-5xl mx-auto space-y-6 font-mono">
         <div>
-          <span className="text-[11px] font-mono uppercase tracking-widest text-[#ff8c42] block">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#3ECF8E] block font-semibold">
             Fragen &amp; Antworten
           </span>
           <h2
             id="faq-heading"
-            className="text-lg sm:text-xl font-bold text-white mt-0.5"
+            className="text-2xl sm:text-3xl font-extrabold text-white mt-1"
           >
-            FAQ
+            Häufig gestellte Fragen (FAQ)
           </h2>
         </div>
 
-        <div className="space-y-2.5">
+        <div className="space-y-3">
           {FAQ_ITEMS.map((item, idx) => {
             const isOpen = openIndex === idx;
             return (
               <div
                 key={item.topic}
-                className={`hud-panel rounded-xl border transition-colors overflow-hidden ${
+                className={`hud-panel rounded-2xl border transition-colors overflow-hidden ${
                   isOpen
-                    ? "border-[#ff6b2b]/45"
+                    ? "border-[#3ECF8E]/60 shadow-[0_0_24px_rgba(62,207,142,0.14)]"
                     : "border-zinc-800/85 hover:border-zinc-700"
                 }`}
               >
@@ -104,25 +105,26 @@ export default function FaqSection() {
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
                   aria-expanded={isOpen}
-                  className="w-full px-4 sm:px-5 py-3.5 text-left flex items-center justify-between gap-3 cursor-pointer"
+                  className="w-full px-5 sm:px-6 py-4 sm:py-5 text-left flex items-center justify-between gap-4 cursor-pointer"
                 >
                   <div className="min-w-0">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-500 block">
+                    <span className="text-xs font-mono uppercase tracking-wider text-zinc-400 block font-medium">
                       {item.topic}
                     </span>
-                    <span className="text-sm font-semibold text-zinc-100 block mt-0.5">
+                    {/* Überschriften vergrößert für maximale Lesbarkeit */}
+                    <span className="text-base sm:text-lg font-bold text-zinc-100 block mt-1 font-mono leading-snug">
                       {item.question}
                     </span>
                   </div>
                   <ChevronDown
-                    className={`w-4 h-4 text-zinc-400 shrink-0 transition-transform duration-200 ${
-                      isOpen ? "rotate-180 text-[#ff8c42]" : ""
+                    className={`w-5 h-5 text-zinc-400 shrink-0 transition-transform duration-200 ${
+                      isOpen ? "rotate-180 text-[#3ECF8E]" : ""
                     }`}
                   />
                 </button>
 
                 {isOpen && (
-                  <div className="px-4 sm:px-5 pb-4 pt-1 text-xs sm:text-sm text-zinc-400 leading-relaxed border-t border-zinc-800/60">
+                  <div className="px-5 sm:px-6 pb-5 pt-1 text-sm sm:text-base text-zinc-200 leading-relaxed border-t border-zinc-800/70 font-mono">
                     {item.answer}
                   </div>
                 )}

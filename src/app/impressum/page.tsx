@@ -9,11 +9,11 @@ export const metadata = {
 
 export default function ImpressumPage() {
   return (
-    <div className="min-h-screen bg-[#050507] text-zinc-300 flex flex-col">
+    <div className="min-h-screen bg-[#060709] text-zinc-300 flex flex-col font-mono selection:bg-[#3ECF8E] selection:text-black">
       <main className="flex-1 pt-12 pb-12 px-4 sm:px-6 max-w-3xl mx-auto w-full">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-xs font-mono text-zinc-400 hover:text-[#ff8c42] mb-8 transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-mono text-zinc-400 hover:text-[#3ECF8E] mb-8 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Zurück</span>
@@ -21,9 +21,9 @@ export default function ImpressumPage() {
 
         <div className="hud-panel rounded-2xl p-6 sm:p-10 border border-zinc-800 space-y-7">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-[#ff8c42] mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-[#3ECF8E] mb-3">
               <Shield className="w-3.5 h-3.5" />
-              <span>VORBEREITETE SEITE // § 5 DDG</span>
+              <span>{"//"} VORBEREITETE SEITE § 5 DDG</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
               Impressum
@@ -53,29 +53,22 @@ export default function ImpressumPage() {
             </section>
 
             <section className="space-y-2">
-              <h2 className="text-base font-bold text-white">Registereintrag (falls vorhanden)</h2>
-              <p className="text-zinc-400 text-xs sm:text-sm">
-                Registergericht: [Registergericht eintragen]<br />
-                Registernummer: [Registernummer eintragen]
+              <h2 className="text-base font-bold text-white">Umsatzsteuer-ID</h2>
+              <p className="text-xs text-zinc-400">
+                Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: [USt-IdNr. eintragen oder Hinweis auf Kleinunternehmerregelung].
               </p>
             </section>
 
             <section className="space-y-2">
-              <h2 className="text-base font-bold text-white">Umsatzsteuer-ID (falls vorhanden)</h2>
-              <p className="text-zinc-400 text-xs sm:text-sm">
-                Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: [USt-IdNr. eintragen]
-              </p>
-            </section>
-
-            <section className="space-y-2">
-              <h2 className="text-base font-bold text-white">Verantwortlich gemäß § 18 Abs. 2 MStV</h2>
-              <p className="text-zinc-400 text-xs sm:text-sm">
-                [Vorname Nachname, Anschrift eintragen]
+              <h2 className="text-base font-bold text-white">Verbraucherstreitbeilegung / Universalschlichtungsstelle</h2>
+              <p className="text-xs text-zinc-400">
+                Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
               </p>
             </section>
           </div>
         </div>
       </main>
+
       <LegalLinks />
     </div>
   );

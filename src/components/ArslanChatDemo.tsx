@@ -73,14 +73,14 @@ export default function ArslanChatDemo() {
       }
       const replyText =
         data.reply ||
-        "Ich empfehle dir unsere 4-stufige Warteliste direkt darunter, um deinen Bedarf exakt abzustimmen.";
+        "Ich empfehle dir unsere Warteliste direkt darunter, um deinen Bedarf exakt abzustimmen.";
 
       const mentionsForm =
         replyText.toLowerCase().includes("warteliste") ||
         replyText.toLowerCase().includes("formular") ||
         replyText.toLowerCase().includes("paket") ||
-        replyText.toLowerCase().includes("starter") ||
-        replyText.toLowerCase().includes("business");
+        replyText.toLowerCase().includes("assistent") ||
+        replyText.toLowerCase().includes("24/7");
 
       setEntries((prev) => [
         ...prev,
@@ -112,12 +112,18 @@ export default function ArslanChatDemo() {
   };
 
   const handleReset = () => {
-    setEntries([{ id: "greeting", role: "arslan", text: INITIAL_GREETING }]);
+    setEntries([
+      {
+        id: "greeting",
+        role: "arslan",
+        text: INITIAL_GREETING,
+      },
+    ]);
     setInput("");
   };
 
   const scrollToForm = () => {
-    const el = document.getElementById("warteliste") || document.getElementById("anfrage");
+    const el = document.getElementById("warteliste");
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
     }
@@ -125,34 +131,35 @@ export default function ArslanChatDemo() {
 
   return (
     <section
-      id="chat"
-      aria-label="Alp Arsalan KI-Chatfeld"
-      className="relative px-4 sm:px-6 pt-2 pb-12"
+      id="berater"
+      aria-label="Alp Arsalan KI-Verkaufsberater"
+      className="relative px-4 sm:px-6 pt-1 pb-10"
     >
-      <div className="max-w-3xl mx-auto">
-        <div className="hud-panel rounded-2xl border border-zinc-800/90 shadow-[0_12px_48px_rgba(0,0,0,0.75)] overflow-hidden">
-          {/* Subtle HUD Top Bar */}
-          <div className="px-4 sm:px-5 py-3 bg-[#090a0e]/95 border-b border-zinc-800/80 flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2.5 min-w-0">
-              <div className="relative w-7 h-7 rounded-full overflow-hidden border border-[#ff8c42]/45 bg-zinc-900 shrink-0">
+      {/* Breiteres Chatfenster auf Desktop für bessere Ausnutzung der Bildschirmbreite */}
+      <div className="max-w-4xl lg:max-w-5xl mx-auto">
+        <div className="hud-panel rounded-2xl border border-zinc-800/90 shadow-[0_16px_56px_rgba(0,0,0,0.8)] overflow-hidden">
+          {/* HUD Top Bar in Supabase-Grün */}
+          <div className="px-4 sm:px-6 py-3.5 bg-[#090a0e]/95 border-b border-zinc-800/80 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[#3ECF8E]/50 bg-zinc-900 shrink-0">
                 <Image
                   src="/arslan_avatar_round.png"
                   alt="Alp Arsalan"
-                  width={28}
-                  height={28}
+                  width={32}
+                  height={32}
                   className="object-cover"
                 />
               </div>
-              <div className="flex items-baseline gap-1.5 min-w-0">
-                <span className="text-xs sm:text-sm font-semibold text-zinc-100 truncate">
+              <div className="flex items-baseline gap-2 min-w-0">
+                <span className="text-sm sm:text-base font-bold text-white truncate font-mono">
                   Alp Arsalan
                 </span>
-                <span className="text-[11px] text-zinc-400 hidden xs:inline truncate">
+                <span className="text-xs text-zinc-400 hidden xs:inline truncate font-mono">
                   · KI-Verkaufsberater (YY-AI-Agent)
                 </span>
               </div>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono tracking-wider uppercase bg-[#ff6b2b]/15 text-[#ff8c42] border border-[#ff6b2b]/35 shrink-0 flex items-center gap-1">
-                <Sparkles className="w-2.5 h-2.5" />
+              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono tracking-wider uppercase bg-[#3ECF8E]/15 text-[#3ECF8E] border border-[#3ECF8E]/35 shrink-0 hidden sm:flex items-center gap-1 font-semibold">
+                <Sparkles className="w-3 h-3" />
                 Live-Berater
               </span>
             </div>
@@ -161,7 +168,7 @@ export default function ArslanChatDemo() {
               <button
                 type="button"
                 onClick={handleReset}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-900/90 border border-zinc-800 text-[11px] font-mono text-zinc-400 hover:text-zinc-200 hover:border-zinc-700 transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-zinc-900/90 border border-zinc-800 text-xs font-mono text-zinc-300 hover:text-white hover:border-zinc-700 transition-colors cursor-pointer"
               >
                 <RotateCcw className="w-3 h-3" />
                 <span>Neu starten</span>
@@ -169,16 +176,16 @@ export default function ArslanChatDemo() {
             )}
           </div>
 
-          {/* Chat Feed */}
+          {/* Vergrößerter Chat-Bereich (min-h-[300px] max-h-[460px] sm:max-h-[500px]) */}
           <div
             ref={scrollRef}
-            className="p-4 sm:p-5 space-y-3.5 max-h-[300px] overflow-y-auto bg-[#07080b]/85"
+            className="p-4 sm:p-6 space-y-4 min-h-[300px] max-h-[460px] sm:max-h-[500px] overflow-y-auto bg-[#07080b]/85"
           >
             {entries.map((entry) => {
               if (entry.role === "user") {
                 return (
                   <div key={entry.id} className="flex justify-end">
-                    <div className="max-w-[85%] sm:max-w-[78%] rounded-2xl rounded-tr-sm px-4 py-2.5 bg-zinc-800/90 border border-zinc-700/80 text-sm text-zinc-100 leading-relaxed">
+                    <div className="max-w-[85%] sm:max-w-[78%] rounded-2xl rounded-tr-sm px-4 sm:px-5 py-3 bg-zinc-800/95 border border-zinc-700/80 text-sm sm:text-base text-zinc-100 leading-relaxed font-mono shadow-sm">
                       {entry.text}
                     </div>
                   </div>
@@ -189,17 +196,17 @@ export default function ArslanChatDemo() {
                 return (
                   <div key={entry.id} className="flex justify-start">
                     <div className="max-w-[92%] sm:max-w-[85%] space-y-2">
-                      <div className="rounded-xl px-3.5 py-2.5 bg-[#160d08]/90 border border-[#ff6b2b]/30 text-xs text-zinc-300 leading-relaxed">
+                      <div className="rounded-xl px-4 py-3 bg-[#06140e]/90 border border-[#3ECF8E]/30 text-xs sm:text-sm text-zinc-200 leading-relaxed font-mono">
                         <span>{entry.text}</span>
                       </div>
                       {entry.showCta && (
                         <button
                           type="button"
                           onClick={scrollToForm}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#ff6b2b]/15 border border-[#ff6b2b]/40 text-xs font-medium text-[#ff8c42] hover:text-white hover:bg-[#ff6b2b]/25 transition-all cursor-pointer"
+                          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#3ECF8E]/15 border border-[#3ECF8E]/40 text-xs sm:text-sm font-semibold text-[#3ECF8E] hover:text-white hover:bg-[#3ECF8E]/25 transition-all cursor-pointer font-mono"
                         >
-                          <ArrowDownCircle className="w-3.5 h-3.5" />
-                          <span>Zur Warteliste (Schritt 1 von 4)</span>
+                          <ArrowDownCircle className="w-4 h-4" />
+                          <span>Zur Warteliste wechseln</span>
                         </button>
                       )}
                     </div>
@@ -208,28 +215,28 @@ export default function ArslanChatDemo() {
               }
 
               return (
-                <div key={entry.id} className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-full overflow-hidden border border-zinc-700/80 bg-zinc-900 shrink-0 mt-0.5">
+                <div key={entry.id} className="flex items-start gap-3 sm:gap-3.5">
+                  <div className="w-9 h-9 rounded-full overflow-hidden border border-zinc-700/80 bg-zinc-900 shrink-0 mt-0.5">
                     <Image
                       src="/arslan_avatar_round.png"
                       alt="Alp Arsalan"
-                      width={32}
-                      height={32}
+                      width={36}
+                      height={36}
                       className="object-cover"
                     />
                   </div>
-                  <div className="max-w-[88%] sm:max-w-[82%] space-y-2">
-                    <div className="rounded-2xl rounded-tl-sm px-4 py-3 bg-zinc-900/90 border border-zinc-800/90 text-sm text-zinc-200 leading-relaxed whitespace-pre-line">
+                  <div className="max-w-[88%] sm:max-w-[82%] space-y-2.5">
+                    <div className="rounded-2xl rounded-tl-sm px-4 sm:px-5 py-3.5 bg-zinc-900/95 border border-zinc-800/90 text-sm sm:text-base text-zinc-100 leading-relaxed whitespace-pre-line font-mono shadow-sm">
                       {entry.text}
                     </div>
                     {entry.showCta && (
                       <button
                         type="button"
                         onClick={scrollToForm}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#ff6b2b]/15 border border-[#ff6b2b]/40 text-xs font-medium text-[#ff8c42] hover:text-white hover:bg-[#ff6b2b]/25 transition-all cursor-pointer"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#3ECF8E]/15 border border-[#3ECF8E]/40 text-xs sm:text-sm font-semibold text-[#3ECF8E] hover:text-white hover:bg-[#3ECF8E]/25 transition-all cursor-pointer font-mono"
                       >
-                        <ArrowDownCircle className="w-3.5 h-3.5" />
-                        <span>Zur Warteliste (Schritt 1 von 4)</span>
+                        <ArrowDownCircle className="w-4 h-4" />
+                        <span>Zur Warteliste wechseln</span>
                       </button>
                     )}
                   </div>
@@ -238,18 +245,18 @@ export default function ArslanChatDemo() {
             })}
 
             {isLoading && (
-              <div className="flex items-start gap-3" role="status" aria-live="polite">
-                <div className="w-8 h-8 rounded-full overflow-hidden border border-zinc-700/80 bg-zinc-900 shrink-0 mt-0.5">
+              <div className="flex items-start gap-3 sm:gap-3.5" role="status" aria-live="polite">
+                <div className="w-9 h-9 rounded-full overflow-hidden border border-zinc-700/80 bg-zinc-900 shrink-0 mt-0.5">
                   <Image
                     src="/arslan_avatar_round.png"
                     alt="Alp Arsalan"
-                    width={32}
-                    height={32}
+                    width={36}
+                    height={36}
                     className="object-cover"
                   />
                 </div>
-                <div className="rounded-2xl rounded-tl-sm px-4 py-3 bg-zinc-900/90 border border-zinc-800/90 text-xs font-mono text-zinc-400 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#ff8c42] animate-pulse" />
+                <div className="rounded-2xl rounded-tl-sm px-4 py-3 bg-zinc-900/90 border border-zinc-800/90 text-xs sm:text-sm font-mono text-zinc-300 flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#3ECF8E] animate-pulse" />
                   <span>Alp Arsalan berät …</span>
                 </div>
               </div>
@@ -258,8 +265,8 @@ export default function ArslanChatDemo() {
 
           {/* Quick Suggestions Chips */}
           {entries.length <= 2 && (
-            <div className="px-4 py-2 bg-[#08090d] border-t border-zinc-900/80 flex items-center gap-2 overflow-x-auto no-scrollbar">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-500 shrink-0">
+            <div className="px-4 sm:px-6 py-2.5 bg-[#08090d] border-t border-zinc-900/80 flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+              <span className="text-xs font-mono uppercase tracking-wider text-zinc-400 shrink-0">
                 Vorschläge:
               </span>
               {QUICK_SUGGESTIONS.map((sug) => (
@@ -268,7 +275,7 @@ export default function ArslanChatDemo() {
                   type="button"
                   onClick={() => sendQuestion(sug)}
                   disabled={isLoading}
-                  className="px-2.5 py-1 rounded-lg bg-zinc-900/80 border border-zinc-800/90 text-[11px] text-zinc-300 hover:text-white hover:border-[#ff6b2b]/40 whitespace-nowrap transition-all cursor-pointer"
+                  className="px-3 py-1.5 rounded-lg bg-zinc-900/90 border border-zinc-800 text-xs sm:text-sm font-mono text-zinc-200 hover:text-white hover:border-[#3ECF8E]/50 whitespace-nowrap transition-all cursor-pointer"
                 >
                   {sug}
                 </button>
@@ -279,9 +286,9 @@ export default function ArslanChatDemo() {
           {/* Input Bar */}
           <form
             onSubmit={handleSubmit}
-            className="p-3 sm:p-4 bg-[#090a0e]/95 border-t border-zinc-800/80"
+            className="p-3.5 sm:p-5 bg-[#090a0e]/95 border-t border-zinc-800/80"
           >
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-3">
               <label htmlFor="arslan-chat-input" className="sr-only">
                 Frage an Alp Arsalan stellen
               </label>
@@ -292,26 +299,26 @@ export default function ArslanChatDemo() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Frag Alp Arsalan zu Paketen, Branchenlösungen oder der Warteliste …"
-                className="flex-1 min-w-0 bg-zinc-900/90 border border-zinc-800 focus:border-[#ff8c42]/60 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#ff8c42]/60 transition-colors"
+                className="flex-1 min-w-0 bg-zinc-900/90 border border-zinc-800 focus:border-[#3ECF8E]/60 rounded-xl px-4 py-3 text-base text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-[#3ECF8E]/60 transition-colors font-mono"
               />
               <button
                 type="submit"
                 disabled={!input.trim() || isLoading}
                 aria-label="Nachricht senden"
-                className="ember-button h-[42px] sm:h-[40px] px-4 rounded-xl text-white font-medium inline-flex items-center justify-center gap-2 disabled:opacity-40 disabled:pointer-events-none cursor-pointer shrink-0"
+                className="supabase-button h-[48px] px-5 sm:px-6 rounded-xl text-[#060709] font-bold text-sm inline-flex items-center justify-center gap-2 disabled:opacity-40 disabled:pointer-events-none cursor-pointer shrink-0"
               >
                 <Send className="w-4 h-4" />
-                <span className="hidden sm:inline text-xs font-semibold">
+                <span className="hidden sm:inline">
                   Senden
                 </span>
               </button>
             </div>
-            <p className="mt-2 text-[11px] font-mono text-zinc-500 flex items-center justify-between">
+            <p className="mt-2 text-xs font-mono text-zinc-400 flex items-center justify-between">
               <span className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/80 shrink-0" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#3ECF8E] shrink-0" />
                 <span>Fokussierte Verkaufsberatung · Antwortzeit &lt; 1 Sekunde</span>
               </span>
-              <span className="hidden sm:inline text-zinc-600">
+              <span className="hidden sm:inline text-zinc-500">
                 {input.length}/350 Zeichen
               </span>
             </p>

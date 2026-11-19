@@ -9,11 +9,11 @@ export const metadata = {
 
 export default function DatenschutzPage() {
   return (
-    <div className="min-h-screen bg-[#050507] text-zinc-300 flex flex-col">
+    <div className="min-h-screen bg-[#060709] text-zinc-300 flex flex-col font-mono selection:bg-[#3ECF8E] selection:text-black">
       <main className="flex-1 pt-12 pb-12 px-4 sm:px-6 max-w-3xl mx-auto w-full">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-xs font-mono text-zinc-400 hover:text-[#ff8c42] mb-8 transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-mono text-zinc-400 hover:text-[#3ECF8E] mb-8 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Zurück</span>
@@ -21,9 +21,9 @@ export default function DatenschutzPage() {
 
         <div className="hud-panel rounded-2xl p-6 sm:p-10 border border-zinc-800 space-y-7">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-[#ff8c42] mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-[#3ECF8E] mb-3">
               <Lock className="w-3.5 h-3.5" />
-              <span>VORBEREITETE SEITE // DSGVO</span>
+              <span>{"//"} VORBEREITETE SEITE DSGVO</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
               Datenschutzerklärung
@@ -51,24 +51,29 @@ export default function DatenschutzPage() {
             </section>
 
             <section className="space-y-2">
-              <h2 className="text-base font-bold text-white">3. Mehrstufiges Anfrageformular</h2>
+              <h2 className="text-base font-bold text-white">3. Wartelisten- und Kontaktformular</h2>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-                Im Anfrageformular werden Angaben zum gewünschten Einsatzbereich (ggf. inklusive Branche), zu gewünschten Aufgaben, zu gewünschten Integrationen sowie deine Kontaktdaten (Name, E-Mail-Adresse und optional Telefonnummer) erfasst. Die Verarbeitung erfolgt auf Grundlage deiner Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) sowie zur Durchführung vorvertraglicher Maßnahmen (Art. 6 Abs. 1 lit. b DSGVO).
-              </p>
-              <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-                Solange noch keine produktive Backend-Schnittstelle angebunden ist, findet keine dauerhafte Speicherung oder Übermittlung deiner Formulareingaben statt; das Formular weist hierauf ausdrücklich hin.
+                Wenn du dich über unser Formular für die Warteliste anmeldest, werden deine eingegebenen Kontaktdaten (Name, E-Mail-Adresse, Telefonnummer), die gewünschten Aufgaben, Schnittstellen und deine gewählte Paketpräferenz zur Bearbeitung deiner Anfrage und zur persönlichen Kontaktaufnahme gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. a und b DSGVO.
               </p>
             </section>
 
             <section className="space-y-2">
-              <h2 className="text-base font-bold text-white">4. Rechte betroffener Personen</h2>
+              <h2 className="text-base font-bold text-white">4. Interaktiver KI-Chatberater</h2>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-                Dir stehen im Rahmen der gesetzlichen Vorgaben der DSGVO unter anderem Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit sowie Widerruf erteilter Einwilligungen zu. Zudem besteht ein Beschwerderecht bei einer zuständigen Datenschutz-Aufsichtsbehörde.
+                Die im interaktiven Beratungsfenster eingegebenen Fragen werden zur Erzeugung automatisierter Lösungsvorschläge serverseitig verarbeitet. Gib in das Chatfenster keine vertraulichen Passwörter oder Zahlungsdaten ein.
+              </p>
+            </section>
+
+            <section className="space-y-2">
+              <h2 className="text-base font-bold text-white">5. Deine Rechte</h2>
+              <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
+                Du hast nach der DSGVO das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung deiner personenbezogenen Daten sowie das Recht, eine erteilte Einwilligung jederzeit mit Wirkung für die Zukunft zu widerrufen.
               </p>
             </section>
           </div>
         </div>
       </main>
+
       <LegalLinks />
     </div>
   );
