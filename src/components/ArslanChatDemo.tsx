@@ -12,7 +12,7 @@ interface ChatEntry {
 }
 
 const INITIAL_GREETING =
-  "Hallo! Ich bin Alp Arsalan, dein KI-Unternehmensberater von YY-AI-Agent. Welche Prozesse in deinem Unternehmen oder Alltag möchtest du mit einer maßgeschneiderten KI automatisieren?";
+  "Hallo! Ich bin Alp Arsalan, der KI-Berater von Yahya. Ich helfe dir dabei, die passende KI-Lösung für deinen Alltag oder dein Unternehmen zu finden. Erzähl mir, was du gerne automatisieren oder optimieren möchtest.";
 
 const QUICK_SUGGESTIONS = [
   "Welche Pakete gibt es?",
@@ -154,11 +154,11 @@ export default function ArslanChatDemo() {
                 <span className="text-sm sm:text-base font-bold text-white truncate font-mono">
                   Alp Arsalan
                 </span>
-                <span className="text-xs text-zinc-400 hidden xs:inline truncate font-mono">
-                  · KI-Verkaufsberater (YY-AI-Agent)
+                <span className="text-[12px] sm:text-xs text-zinc-400 inline truncate font-mono">
+                  · KI-Berater von Yahya
                 </span>
               </div>
-              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono tracking-wider uppercase bg-[#3ECF8E]/15 text-[#3ECF8E] border border-[#3ECF8E]/35 shrink-0 hidden sm:flex items-center gap-1 font-semibold">
+              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono tracking-wider uppercase bg-[#3ECF8E]/15 text-[#3ECF8E] border border-[#3ECF8E]/35 shrink-0 hidden md:flex items-center gap-1 font-semibold">
                 <Sparkles className="w-3 h-3" />
                 Live-Berater
               </span>
@@ -168,7 +168,7 @@ export default function ArslanChatDemo() {
               <button
                 type="button"
                 onClick={handleReset}
-                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-zinc-900/90 border border-zinc-800 text-xs font-mono text-zinc-300 hover:text-white hover:border-zinc-700 transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-zinc-900/90 border border-zinc-800 text-[14px] font-mono text-zinc-300 hover:text-white hover:border-zinc-700 transition-colors cursor-pointer"
               >
                 <RotateCcw className="w-3 h-3" />
                 <span>Neu starten</span>
@@ -185,7 +185,7 @@ export default function ArslanChatDemo() {
               if (entry.role === "user") {
                 return (
                   <div key={entry.id} className="flex justify-end">
-                    <div className="max-w-[85%] sm:max-w-[78%] rounded-2xl rounded-tr-sm px-4 sm:px-5 py-3 bg-zinc-800/95 border border-zinc-700/80 text-sm sm:text-base text-zinc-100 leading-relaxed font-mono shadow-sm">
+                    <div className="max-w-[85%] sm:max-w-[78%] rounded-2xl rounded-tr-sm px-4 sm:px-5 py-3 bg-zinc-800/95 border border-zinc-700/80 text-[14px] text-zinc-100 leading-relaxed font-mono shadow-sm">
                       {entry.text}
                     </div>
                   </div>
@@ -196,14 +196,14 @@ export default function ArslanChatDemo() {
                 return (
                   <div key={entry.id} className="flex justify-start">
                     <div className="max-w-[92%] sm:max-w-[85%] space-y-2">
-                      <div className="rounded-xl px-4 py-3 bg-[#06140e]/90 border border-[#3ECF8E]/30 text-xs sm:text-sm text-zinc-200 leading-relaxed font-mono">
+                      <div className="rounded-xl px-4 py-3 bg-[#06140e]/90 border border-[#3ECF8E]/30 text-[14px] text-zinc-200 leading-relaxed font-mono">
                         <span>{entry.text}</span>
                       </div>
                       {entry.showCta && (
                         <button
                           type="button"
                           onClick={scrollToForm}
-                          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#3ECF8E]/15 border border-[#3ECF8E]/40 text-xs sm:text-sm font-semibold text-[#3ECF8E] hover:text-white hover:bg-[#3ECF8E]/25 transition-all cursor-pointer font-mono"
+                          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#3ECF8E]/15 border border-[#3ECF8E]/40 text-[14px] font-semibold text-[#3ECF8E] hover:text-white hover:bg-[#3ECF8E]/25 transition-all cursor-pointer font-mono"
                         >
                           <ArrowDownCircle className="w-4 h-4" />
                           <span>Zur Warteliste wechseln</span>
@@ -226,14 +226,14 @@ export default function ArslanChatDemo() {
                     />
                   </div>
                   <div className="max-w-[88%] sm:max-w-[82%] space-y-2.5">
-                    <div className="rounded-2xl rounded-tl-sm px-4 sm:px-5 py-3.5 bg-zinc-900/95 border border-zinc-800/90 text-sm sm:text-base text-zinc-100 leading-relaxed whitespace-pre-line font-mono shadow-sm">
+                    <div className="rounded-2xl rounded-tl-sm px-4 sm:px-5 py-3.5 bg-zinc-900/95 border border-zinc-800/90 text-[14px] text-zinc-100 leading-relaxed whitespace-pre-line font-mono shadow-sm">
                       {entry.text}
                     </div>
                     {entry.showCta && (
                       <button
                         type="button"
                         onClick={scrollToForm}
-                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#3ECF8E]/15 border border-[#3ECF8E]/40 text-xs sm:text-sm font-semibold text-[#3ECF8E] hover:text-white hover:bg-[#3ECF8E]/25 transition-all cursor-pointer font-mono"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#3ECF8E]/15 border border-[#3ECF8E]/40 text-[14px] font-semibold text-[#3ECF8E] hover:text-white hover:bg-[#3ECF8E]/25 transition-all cursor-pointer font-mono"
                       >
                         <ArrowDownCircle className="w-4 h-4" />
                         <span>Zur Warteliste wechseln</span>
@@ -275,7 +275,7 @@ export default function ArslanChatDemo() {
                   type="button"
                   onClick={() => sendQuestion(sug)}
                   disabled={isLoading}
-                  className="px-3 py-1.5 rounded-lg bg-zinc-900/90 border border-zinc-800 text-xs sm:text-sm font-mono text-zinc-200 hover:text-white hover:border-[#3ECF8E]/50 whitespace-nowrap transition-all cursor-pointer"
+                  className="px-3 py-1.5 rounded-lg bg-zinc-900/90 border border-zinc-800 text-[14px] font-mono text-zinc-200 hover:text-white hover:border-[#3ECF8E]/50 whitespace-nowrap transition-all cursor-pointer"
                 >
                   {sug}
                 </button>
@@ -305,7 +305,7 @@ export default function ArslanChatDemo() {
                 type="submit"
                 disabled={!input.trim() || isLoading}
                 aria-label="Nachricht senden"
-                className="supabase-button h-[48px] px-5 sm:px-6 rounded-xl text-[#060709] font-bold text-sm inline-flex items-center justify-center gap-2 disabled:opacity-40 disabled:pointer-events-none cursor-pointer shrink-0"
+                className="supabase-button h-[48px] px-5 sm:px-6 rounded-xl text-[#060709] font-bold text-[14px] inline-flex items-center justify-center gap-2 disabled:opacity-40 disabled:pointer-events-none cursor-pointer shrink-0"
               >
                 <Send className="w-4 h-4" />
                 <span className="hidden sm:inline">

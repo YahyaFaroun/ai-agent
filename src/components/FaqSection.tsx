@@ -44,7 +44,7 @@ const FAQ_ITEMS = [
     topic: "Dauer",
     question: "Wie lange dauert die Einrichtung?",
     answer:
-      "KI-Assistent: 3–5 Tage. KI-Agent 24/7: 14–30 Tage. KI-Unternehmenslösungen: 14–30 Tage, abhängig vom Projektumfang.",
+      "KI-Assistent: 3–5 Tage. KI-Agent 24/7: 7–14 Tage. KI-Unternehmenslösungen: 14–30 Tage, abhängig vom Projektumfang.",
   },
   {
     topic: "Erweiterung",
@@ -124,7 +124,7 @@ export default function FaqSection() {
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 sm:px-6 pb-5 pt-1 text-sm sm:text-base text-zinc-200 leading-relaxed border-t border-zinc-800/70 font-mono">
+                  <div className="px-5 sm:px-6 pb-5 pt-1 text-[15px] text-zinc-200 leading-relaxed border-t border-zinc-800/70 font-mono">
                     {item.answer}
                   </div>
                 )}

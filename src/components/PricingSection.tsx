@@ -30,7 +30,7 @@ export default function PricingSection() {
       price: "ab 3.000 €",
       priceNote: "Einmalige Einrichtung",
       description: "Autonomer KI-Mitarbeiter im durchgehenden 24/7-Serverbetrieb mit Dashboard.",
-      duration: "Einrichtungsdauer: 14–30 Tage",
+      duration: "Einrichtungsdauer: 7–14 Tage",
       support: "Support ab 100 € monatlich",
       features: [
         "Eigener KI-Agent",
@@ -144,12 +144,12 @@ export default function PricingSection() {
                   </div>
                 </div>
 
-                {/* Fließtext mit 15-20% größerer Schrift und hohem Kontrast (text-zinc-200) */}
-                <p className="text-sm text-zinc-200 leading-relaxed min-h-[44px]">
+                {/* Fließtext auf 15 px eingestellt */}
+                <p className="text-[15px] text-zinc-200 leading-relaxed min-h-[44px]">
                   {pkg.description}
                 </p>
 
-                <div className="pt-3 border-t border-zinc-800/80 space-y-2 text-xs sm:text-sm font-mono text-zinc-200">
+                <div className="pt-3 border-t border-zinc-800/80 space-y-2 text-[14px] font-mono text-zinc-200">
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4 text-[#3ECF8E] shrink-0" />
                     <span className="font-medium">{pkg.duration}</span>
@@ -164,7 +164,8 @@ export default function PricingSection() {
                   <span className="text-xs font-mono uppercase tracking-wider text-zinc-400 block mb-3 font-semibold">
                     Enthaltene Leistungen:
                   </span>
-                  <ul className="space-y-2.5 text-xs sm:text-sm text-zinc-200">
+                  {/* Leistungsmerkmale auf 14 px eingestellt */}
+                  <ul className="space-y-2.5 text-[14px] text-zinc-200">
                     {pkg.features.map((feat) => (
                       <li key={feat} className="flex items-start gap-2.5">
                         <Check className="w-4 h-4 text-[#3ECF8E] shrink-0 mt-0.5" />
@@ -176,10 +177,11 @@ export default function PricingSection() {
               </div>
 
               <div className="pt-8">
+                {/* Button auf 14 px eingestellt */}
                 <button
                   type="button"
                   onClick={() => handleSelectPackage(pkg.name)}
-                  className={`w-full py-3 px-5 rounded-xl text-sm font-bold text-center block transition-all cursor-pointer ${
+                  className={`w-full py-3 px-5 rounded-xl text-[14px] font-bold text-center block transition-all cursor-pointer ${
                     pkg.featured
                       ? "supabase-button shadow-lg text-[#060709]"
                       : "metallic-button text-zinc-100 hover:text-white"
@@ -192,13 +194,13 @@ export default function PricingSection() {
           ))}
         </div>
 
-        {/* Allgemeine Geschäftsregeln - Breiter und kontrastreicher */}
-        <div className="rounded-2xl p-5 sm:p-6 bg-zinc-950/85 border border-zinc-800 text-xs sm:text-sm text-zinc-300 space-y-2.5">
+        {/* Allgemeine Geschäftsregeln – 14 px */}
+        <div className="rounded-2xl p-5 sm:p-6 bg-zinc-950/85 border border-zinc-800 text-[14px] text-zinc-300 space-y-2.5">
           <div className="font-mono text-xs uppercase tracking-wider text-zinc-100 flex items-center gap-2 font-bold">
             <span className="w-2 h-2 rounded-full bg-[#3ECF8E]" />
             Transparente Geschäftsregeln
           </div>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-zinc-300 leading-relaxed list-disc list-inside">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-[14px] text-zinc-300 leading-relaxed list-disc list-inside">
             <li>Die Einrichtungspreise sind einmalige Fixkosten.</li>
             <li>KI-Verbrauch und ggf. Hosting trägst du direkt über deine eigenen Anbieterzugänge.</li>
             <li>Keine versteckten Gebühren oder künstlich gebündelten Token-Pakete.</li>

@@ -1,4 +1,4 @@
-import { ARSLAN_SYSTEM_PROMPT } from "./knowledgeBase";
+import { ARSLAN_SYSTEM_PROMPT, ISLAMIC_GREETING_REGEX } from "./knowledgeBase";
 
 export interface ChatMessage {
   role: "user" | "assistant" | "system";
@@ -31,11 +31,10 @@ const REQUEST_TIMEOUT_MS = 15000;
 // Ausreichend Kontext für mehrstufige geschäftliche Beratungsgespräche
 const HISTORY_WINDOW = 10;
 const MAX_CHARS_PER_MESSAGE = 600;
-const MAX_OUTPUT_TOKENS = 450;
+// Begrenzte Ausgabe für kurze, prägnante und natürliche Antworten (2–4 Sätze)
+const MAX_OUTPUT_TOKENS = 260;
 
 // Standardmodelle (per GEMINI_MODEL / GEMINI_FALLBACK_MODEL überschreibbar).
-// gemini-2.5-flash ist für diesen Schlüssel nicht mehr freigegeben (HTTP 404,
-// "no longer available to new users"); Google empfiehlt gemini-3.8-flash.
 const DEFAULT_GEMINI_MODEL = "gemini-3.8-flash";
 const DEFAULT_GEMINI_FALLBACK_MODEL = "gemini-3.5-flash-lite";
 
@@ -48,6 +47,54 @@ class ProviderError extends Error {
     super(message);
     this.name = "ProviderError";
   }
+}
+
+/**
+ * Erstellt dynamische System-Anweisungen mit Gesprächskontext (keine doppelte Vorstellung,
+ * islamische Begrüßungserwiderung, Markenname Yahya).
+ */
+function getSystemInstruction(hasHistory: boolean, userMessage: string): string {
+  let prompt = ARSLAN_SYSTEM_PROMPT;
+
+  if (hasHistory) {
+    prompt += "\n\nHINWEIS ZUR GESPRÄCHSFÜHRUNG: Dies ist ein laufendes Gespräch. Stelle dich NICHT noch einmal vor (kein 'Ich bin Alp Arsalan', kein 'Als KI-Berater...'). Antworte direkt und individuell auf das Anliegen.";
+  }
+
+  if (ISLAMIC_GREETING_REGEX.test(userMessage)) {
+    prompt += '\n\nHINWEIS ZUR BEGRÜSSUNG: Der Nutzer hat eine islamische Begrüßungsformel verwendet. Erwidere zu Beginn ZWINGEND mit "Wa Alaikum Salam!".';
+  }
+
+  return prompt;
+}
+
+/**
+ * Formatiert und bereinigt die KI-Antwort gemäß den Marken- und Qualitätsrichtlinien.
+ */
+function sanitizeFinalReply(text: string, hasHistory: boolean, userMessage: string): string {
+  let reply = toPlainChatText(text);
+
+  // 1. Markenbezeichnung YY-AI-Agent konsequent durch Yahya ersetzen
+  reply = reply.replace(/YY-AI-Agent/gi, "Yahya");
+
+  // 2. Islamische Begrüßung sicherstellen, falls Nutzer islamisch gegrüßt hat
+  if (ISLAMIC_GREETING_REGEX.test(userMessage)) {
+    if (!/^wa\s+alaikum/i.test(reply)) {
+      reply = `Wa Alaikum Salam! ${reply}`;
+    }
+  }
+
+  // 3. Keine wiederholte Selbstvorstellung in laufenden Gesprächen
+  if (hasHistory) {
+    reply = reply
+      .replace(/^(hallo[,!]?\s*)?(ich bin alp arsalan[,.]?|als alp arsalan[,.]?|mein name ist alp arsalan[,.]?)\s*(der ki-berater von yahya[,.]?)?\s*/i, "")
+      .replace(/^(ich bin alp arsalan[,.]?)\s*/i, "");
+    // Ersten Buchstaben nach Bereinigung groß schreiben
+    if (reply.length > 0) {
+      reply = reply.charAt(0).toUpperCase() + reply.slice(1);
+    }
+  }
+
+  return reply;
 }
 
 /**
@@ -201,7 +248,7 @@ async function callGemini(
     cache: "no-store",
     body: JSON.stringify({
       system_instruction: {
-        parts: [{ text: ARSLAN_SYSTEM_PROMPT }],
+        parts: [{ text: getSystemInstruction(history.length > 0, userMessage) }],
       },
       contents,
       generationConfig: {
@@ -218,7 +265,8 @@ async function callGemini(
 
   const data = await res.json();
   const parts: { text?: string }[] = data.candidates?.[0]?.content?.parts ?? [];
-  const replyText = toPlainChatText(parts.map((p) => p.text ?? "").join(""));
+  const rawReply = parts.map((p) => p.text ?? "").join("");
+  const replyText = sanitizeFinalReply(rawReply, history.length > 0, userMessage);
   if (!replyText) {
     throw new ProviderError("leere Antwort", true);
   }
@@ -250,7 +298,7 @@ async function callOpenAI(
     body: JSON.stringify({
       model,
       messages: [
-        { role: "system", content: ARSLAN_SYSTEM_PROMPT },
+        { role: "system", content: getSystemInstruction(history.length > 0, userMessage) },
         ...history.map((m) => ({
           role: m.role === "user" ? "user" : "assistant",
           content: m.content.substring(0, MAX_CHARS_PER_MESSAGE),
@@ -267,7 +315,8 @@ async function callOpenAI(
   }
 
   const data = await res.json();
-  const replyText = toPlainChatText(data.choices?.[0]?.message?.content ?? "");
+  const rawReply = data.choices?.[0]?.message?.content ?? "";
+  const replyText = sanitizeFinalReply(rawReply, history.length > 0, userMessage);
   if (!replyText) {
     throw new Error("OpenAI API error: leere Antwort");
   }

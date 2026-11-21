@@ -367,7 +367,7 @@ export default function MultiStepInquiryForm() {
                 <h2 className="text-xl sm:text-2xl font-bold text-white">
                   Du stehst auf der Warteliste
                 </h2>
-                <p className="text-sm text-zinc-300 max-w-md mx-auto leading-relaxed">
+                <p className="text-[15px] text-zinc-300 max-w-md mx-auto leading-relaxed">
                   {submitState.message}
                 </p>
                 <p className="text-xs text-zinc-500 max-w-md mx-auto leading-relaxed">
@@ -377,7 +377,7 @@ export default function MultiStepInquiryForm() {
               <button
                 type="button"
                 onClick={resetAll}
-                className="metallic-button px-5 py-2.5 rounded-xl text-xs font-semibold text-zinc-200 hover:text-white cursor-pointer"
+                className="metallic-button px-5 py-2.5 rounded-xl text-[14px] font-semibold text-zinc-200 hover:text-white cursor-pointer font-mono"
               >
                 Weitere Person auf die Warteliste setzen
               </button>
@@ -544,7 +544,7 @@ export default function MultiStepInquiryForm() {
                             }`}
                           >
                             <div className="flex items-center justify-between gap-2">
-                              <span className="text-xs sm:text-sm font-bold">
+                              <span className="text-[14px] font-bold">
                                 {pkg.name}
                               </span>
                               {active && (
@@ -577,7 +577,7 @@ export default function MultiStepInquiryForm() {
                               setStepError("");
                             }}
                             aria-pressed={active}
-                            className={`min-h-[50px] px-4 py-3 rounded-xl border text-left sm:text-center font-medium text-xs sm:text-sm transition-all flex items-center justify-between sm:justify-center gap-2 cursor-pointer ${
+                            className={`min-h-[50px] px-4 py-3 rounded-xl border text-left sm:text-center font-medium text-[14px] transition-all flex items-center justify-between sm:justify-center gap-2 cursor-pointer ${
                               active
                                 ? "bg-[#3ECF8E]/15 border-[#3ECF8E] text-white shadow-[0_0_18px_rgba(62,207,142,0.18)]"
                                 : "bg-zinc-900/75 border-zinc-800 text-zinc-300 hover:border-zinc-700 hover:text-white"
@@ -620,7 +620,7 @@ export default function MultiStepInquiryForm() {
               {/* STEP 2: Aufgaben */}
               {step === 2 && (
                 <div className="space-y-5">
-                  <p className="text-xs sm:text-sm text-zinc-400">
+                  <p className="text-[15px] text-zinc-300">
                     Welche Aufgaben soll dein KI-Agent eigenständig übernehmen? (Mehrfachauswahl möglich)
                   </p>
 
@@ -633,7 +633,7 @@ export default function MultiStepInquiryForm() {
                           type="button"
                           onClick={() => toggleMultiOption(tasks, setTasks, task)}
                           aria-pressed={active}
-                          className={`p-3.5 rounded-xl border text-left font-medium text-xs sm:text-sm transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                          className={`p-3.5 rounded-xl border text-left font-medium text-[14px] transition-all flex items-center justify-between gap-2 cursor-pointer ${
                             active
                               ? "bg-[#3ECF8E]/15 border-[#3ECF8E] text-white shadow-[0_0_18px_rgba(62,207,142,0.18)]"
                               : "bg-zinc-900/75 border-zinc-800 text-zinc-300 hover:border-zinc-700 hover:text-white"
@@ -675,7 +675,7 @@ export default function MultiStepInquiryForm() {
               {/* STEP 3: Integrationen */}
               {step === 3 && (
                 <div className="space-y-5">
-                  <p className="text-xs sm:text-sm text-zinc-400">
+                  <p className="text-[15px] text-zinc-300">
                     Mit welchen Programmen und Systemen soll dein KI-Agent vernetzt werden?
                   </p>
 
@@ -690,7 +690,7 @@ export default function MultiStepInquiryForm() {
                             toggleMultiOption(integrations, setIntegrations, option)
                           }
                           aria-pressed={active}
-                          className={`p-3 rounded-xl border text-left font-medium text-xs sm:text-sm transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                          className={`p-3 rounded-xl border text-left font-medium text-[14px] transition-all flex items-center justify-between gap-2 cursor-pointer ${
                             active
                               ? "bg-[#3ECF8E]/15 border-[#3ECF8E] text-white shadow-[0_0_18px_rgba(62,207,142,0.18)]"
                               : "bg-zinc-900/75 border-zinc-800 text-zinc-300 hover:border-zinc-700 hover:text-white"
@@ -927,7 +927,7 @@ export default function MultiStepInquiryForm() {
                   <button
                     type="button"
                     onClick={handleBack}
-                    className="metallic-button px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-zinc-300 hover:text-white inline-flex items-center gap-1.5 cursor-pointer font-mono"
+                    className="metallic-button px-4 py-2.5 rounded-xl text-[14px] font-semibold text-zinc-300 hover:text-white inline-flex items-center gap-1.5 cursor-pointer font-mono"
                   >
                     <ArrowLeft className="w-4 h-4" />
                     <span>Zurück</span>
@@ -942,7 +942,7 @@ export default function MultiStepInquiryForm() {
                   <button
                     type="button"
                     onClick={handleNext}
-                    className="supabase-button px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-[#060709] inline-flex items-center gap-1.5 cursor-pointer ml-auto font-mono"
+                    className="supabase-button px-5 py-2.5 rounded-xl text-[14px] font-bold text-[#060709] inline-flex items-center gap-1.5 cursor-pointer ml-auto font-mono"
                   >
                     <span>Weiter</span>
                     <ArrowRight className="w-4 h-4" />
@@ -951,7 +951,7 @@ export default function MultiStepInquiryForm() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="supabase-button px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-[#060709] inline-flex items-center gap-2 cursor-pointer ml-auto disabled:opacity-40 disabled:pointer-events-none font-mono"
+                    className="supabase-button px-6 py-2.5 rounded-xl text-[14px] font-bold text-[#060709] inline-flex items-center gap-2 cursor-pointer ml-auto disabled:opacity-40 disabled:pointer-events-none font-mono"
                   >
                     <Send className="w-4 h-4" />
                     <span>{isSubmitting ? "Wird eingetragen …" : "Unverbindlich eintragen"}</span>

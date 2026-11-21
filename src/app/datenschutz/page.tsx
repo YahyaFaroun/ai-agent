@@ -3,8 +3,8 @@ import { ArrowLeft, Lock } from "lucide-react";
 import LegalLinks from "@/components/LegalLinks";
 
 export const metadata = {
-  title: "Datenschutzerklärung – YY-AI-Agent",
-  description: "Vorbereitete Datenschutzerklärung gemäß DSGVO.",
+  title: "Datenschutzerklärung – DigitaleLeads",
+  description: "Datenschutzerklärung gemäß DSGVO.",
 };
 
 export default function DatenschutzPage() {
@@ -23,23 +23,30 @@ export default function DatenschutzPage() {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-[#3ECF8E] mb-3">
               <Lock className="w-3.5 h-3.5" />
-              <span>{"//"} VORBEREITETE SEITE DSGVO</span>
+              <span>{"//"} DATENSCHUTZINFORMATION DSGVO</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
               Datenschutzerklärung
             </h1>
-            <p className="text-xs text-zinc-500 mt-2">
-              Hinweis: Bitte ergänze die gekennzeichneten Platzhalter vor dem produktiven Einsatz um deine rechtsgültigen Angaben.
-            </p>
           </div>
 
           <div className="space-y-6 text-sm leading-relaxed text-zinc-300">
             <section className="space-y-2">
               <h2 className="text-base font-bold text-white">1. Verantwortliche Stelle</h2>
-              <div className="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 font-mono text-xs text-zinc-300 space-y-1">
-                <p>[Unternehmensbezeichnung / Name]</p>
-                <p>[Straße und Hausnummer, PLZ Ort]</p>
-                <p>E-Mail: [Datenschutz-Kontaktadresse eintragen]</p>
+              <div className="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 font-mono text-[14px] text-zinc-200 space-y-1">
+                <p className="font-semibold text-white">DigitaleLeads</p>
+                <p>Yahya Faroun</p>
+                <p>Robert-Hansen-Straße 38</p>
+                <p>40593 Düsseldorf</p>
+                <p>
+                  E-Mail:{" "}
+                  <a
+                    href="mailto:yy.faroun.ai@gmail.com"
+                    className="text-[#3ECF8E] hover:underline"
+                  >
+                    yy.faroun.ai@gmail.com
+                  </a>
+                </p>
               </div>
             </section>
 

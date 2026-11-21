@@ -3,8 +3,8 @@ import { ArrowLeft, Shield } from "lucide-react";
 import LegalLinks from "@/components/LegalLinks";
 
 export const metadata = {
-  title: "Impressum – YY-AI-Agent",
-  description: "Vorbereitete Anbieterkennzeichnung gemäß § 5 DDG.",
+  title: "Impressum – DigitaleLeads",
+  description: "Anbieterkennzeichnung gemäß § 5 TMG.",
 };
 
 export default function ImpressumPage() {
@@ -23,40 +23,45 @@ export default function ImpressumPage() {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-[#3ECF8E] mb-3">
               <Shield className="w-3.5 h-3.5" />
-              <span>{"//"} VORBEREITETE SEITE § 5 DDG</span>
+              <span>{"//"} RECHTLICHE ANGABEN § 5 TMG</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
               Impressum
             </h1>
-            <p className="text-xs text-zinc-500 mt-2">
-              Hinweis: Bitte ersetze die gekennzeichneten Platzhalter vor der öffentlichen Freischaltung durch deine rechtsgültigen Unternehmensangaben.
-            </p>
           </div>
 
           <div className="space-y-6 text-sm leading-relaxed">
             <section className="space-y-2">
-              <h2 className="text-base font-bold text-white">Angaben gemäß § 5 DDG</h2>
-              <div className="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 font-mono text-xs text-zinc-300 space-y-1">
-                <p>[Unternehmensbezeichnung / Rechtsform]</p>
-                <p>Vertreten durch: [Vorname Nachname]</p>
-                <p>[Straße und Hausnummer]</p>
-                <p>[PLZ Ort, Land]</p>
+              <h2 className="text-base font-bold text-white">Angaben gemäß § 5 TMG</h2>
+              <div className="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 font-mono text-[14px] text-zinc-200 space-y-1">
+                <p className="font-semibold text-white">DigitaleLeads</p>
+                <p>Yahya Faroun</p>
+                <p>Robert-Hansen-Straße 38</p>
+                <p>40593 Düsseldorf</p>
               </div>
             </section>
 
             <section className="space-y-2">
               <h2 className="text-base font-bold text-white">Kontakt</h2>
-              <div className="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 font-mono text-xs text-zinc-300 space-y-1">
-                <p>Telefon: [Telefonnummer eintragen]</p>
-                <p>E-Mail: [E-Mail-Adresse eintragen]</p>
+              <div className="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 font-mono text-[14px] text-zinc-200 space-y-1">
+                <p>
+                  E-Mail:{" "}
+                  <a
+                    href="mailto:yy.faroun.ai@gmail.com"
+                    className="text-[#3ECF8E] hover:underline"
+                  >
+                    yy.faroun.ai@gmail.com
+                  </a>
+                </p>
               </div>
             </section>
 
             <section className="space-y-2">
               <h2 className="text-base font-bold text-white">Umsatzsteuer-ID</h2>
-              <p className="text-xs text-zinc-400">
-                Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: [USt-IdNr. eintragen oder Hinweis auf Kleinunternehmerregelung].
-              </p>
+              <div className="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 font-mono text-[14px] text-zinc-200 space-y-1">
+                <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:</p>
+                <p className="font-semibold text-white">DE356418496</p>
+              </div>
             </section>
 
             <section className="space-y-2">

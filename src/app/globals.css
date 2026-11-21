@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
 :root {
   --background: #060709;
   --foreground: #f4f4f5;
@@ -8,6 +12,10 @@
   --accent-green: #3ECF8E;
   --accent-green-glow: rgba(62, 207, 142, 0.25);
   --zinc-metal: #a1a1aa;
+}
+
+.font-mono {
+  font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
 }
 
 body {

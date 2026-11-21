@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { generateArslanReply, ChatMessage } from "@/lib/aiProvider";
 import { buildFallbackReply } from "@/lib/knowledgeBase";
+import { checkTopicGuard } from "@/lib/topicGuard";
 
 // Rate-Limiting: Maximal 8 Chat-Anfragen pro IP innerhalb von 10 Minuten
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
@@ -60,6 +61,15 @@ export async function POST(request: Request) {
 
   // 3. String-Längenbegrenzung (Schutz vor Token-Flooding / Injection)
   const userMessage = rawMessage.substring(0, 350);
+
+  // 3b. Serverseitige Themenbegrenzung und Guardrails (Identität, Injections, Off-Topic)
+  const guardResult = checkTopicGuard(userMessage);
+  if (guardResult.isHandled && guardResult.reply) {
+    return NextResponse.json({
+      reply: guardResult.reply,
+      model: "system-guard",
+    });
+  }
 
   const historyRaw = Array.isArray(body.history) ? body.history : [];
   const sanitizedHistory: ChatMessage[] = historyRaw
