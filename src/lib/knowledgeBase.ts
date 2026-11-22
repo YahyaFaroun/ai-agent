@@ -14,6 +14,8 @@
 export interface PricingPackage {
   name: string;
   badge?: string;
+  positioning: string;
+  motto: string;
   priceFrom: string;
   description: string;
   setupDuration: string;
@@ -26,8 +28,11 @@ export const ARSLAN_PACKAGES: PricingPackage[] = [
   {
     name: "KI-Assistent",
     badge: "Empfohlen",
+    positioning: "Dein persönlicher Assistent.",
+    motto: "Du arbeitest mit KI.",
     priceFrom: "1.000 €",
-    description: "Persönlicher KI-Assistent passend zu deinen Aufgaben, Zielen und Arbeitsabläufen.",
+    description:
+      "Deine persönliche KI, direkt auf deinem Computer. Sie unterstützt dich bei deinen täglichen Aufgaben, verwaltet Projekte, recherchiert und vereinfacht deine Arbeitsabläufe.",
     setupDuration: "3–5 Tage",
     supportOption: "Kein verpflichtender Supportvertrag",
     highlights: [
@@ -40,13 +45,16 @@ export const ARSLAN_PACKAGES: PricingPackage[] = [
       "Nutzung eigener kompatibler KI-Zugänge",
       "Eigenständige Verwaltung",
     ],
-    targetAudience: "Selbstständige, Freiberufler und Einzelunternehmer für Büro, Recherche und Organisation.",
+    targetAudience: "Selbstständige, Freiberufler und Einzelunternehmer für Büro, Recherche und Organisation direkt am eigenen Computer.",
   },
   {
     name: "KI-Agent 24/7",
     badge: "Autonom",
+    positioning: "Dein digitaler Mitarbeiter.",
+    motto: "Die KI arbeitet für dich.",
     priceFrom: "ab 3.000 €",
-    description: "Autonomer KI-Mitarbeiter im durchgehenden 24/7-Serverbetrieb mit eigenem Web-Dashboard.",
+    description:
+      "Dein eigener KI-Agent auf einem Server. Er arbeitet auch bei ausgeschaltetem Computer, erledigt geplante Aufgaben selbstständig und ist von überall über Telegram und dein eigenes Web-Dashboard erreichbar.",
     setupDuration: "7–14 Tage",
     supportOption: "Support ab 100 € monatlich",
     highlights: [
@@ -60,13 +68,16 @@ export const ARSLAN_PACKAGES: PricingPackage[] = [
       "Zeitgesteuerte Aufgaben",
       "Automatische Berichte und Benachrichtigungen",
     ],
-    targetAudience: "Wachsende Teams, Kanzleien, Praxen, Agenturen, Handwerksbetriebe und Onlineshops.",
+    targetAudience: "Wachsende Teams, Kanzleien, Praxen, Agenturen, Handwerksbetriebe und Onlineshops mit Bedarf an 24/7-Hintergrundprozessen.",
   },
   {
     name: "KI-Unternehmenslösungen",
     badge: "Enterprise",
+    positioning: "Dein intelligentes KI-Team.",
+    motto: "Ein KI-Team arbeitet für dein Unternehmen.",
     priceFrom: "ab 10.000 €",
-    description: "Maßgeschneiderte Prozessoptimierung, individuelle Software & vernetzte Multi-Agenten-Systeme.",
+    description:
+      "Ein individuell entwickeltes KI-System, das spezialisierte Agenten, Softwarelösungen und deine Geschäftsprozesse miteinander vernetzt.",
     setupDuration: "14–30 Tage, abhängig vom Projektumfang",
     supportOption: "Support ab 200 € monatlich",
     highlights: [
@@ -80,7 +91,7 @@ export const ARSLAN_PACKAGES: PricingPackage[] = [
       "Zusammenarbeit mehrerer KI-Agenten",
       "Individuelle Dashboards",
     ],
-    targetAudience: "Mittelständische Unternehmen, Großbetriebe und anspruchsvolle Organisationen.",
+    targetAudience: "Mittelständische Unternehmen, Großbetriebe und Organisationen mit vernetzten Systemlandschaften.",
   },
 ];
 
@@ -187,27 +198,39 @@ ANTWORTVERHALTEN (STRIKTE VORGABEN):
 7. Ansprache: Sprich den Nutzer konsequent und wertschätzend mit "du" an.
 
 LEISTUNGSPAKETE & PREISE (VON YAHYA):
-1. KI-Assistent (1.000 €):
-   - Einmalige Einrichtung. Dauer: 3–5 Tage. Kein verpflichtender Supportvertrag.
+1. KI-Assistent (1.000 €) – Empfohlenes Einstiegspaket:
+   - Positionierung: Dein persönlicher Assistent. | Leitsatz: "Du arbeitest mit KI."
+   - Beschreibung: Deine persönliche KI, direkt auf deinem Computer. Sie unterstützt dich bei deinen täglichen Aufgaben, verwaltet Projekte, recherchiert und vereinfacht deine Arbeitsabläufe.
+   - Konditionen: Einmalige Einrichtung (1.000 €). Dauer: 3–5 Tage. Kein verpflichtender Supportvertrag.
    - Enthält: Persönlicher KI-Assistent, individuelle Konfiguration, persönliches Gedächtnis, Projekt- und Aufgabenverwaltung, Recherche und Informationsverarbeitung, Unterstützung bei täglichen Arbeitsabläufen, Nutzung eigener kompatibler KI-Zugänge, eigenständige Verwaltung.
    - Ideal für: Selbstständige, Freiberufler, Solo-Unternehmer.
 
 2. KI-Agent 24/7 (ab 3.000 €):
-   - Einmalige Einrichtung ab 3.000 €. Dauer: 7–14 Tage. Optionaler Support ab 100 € monatlich.
+   - Positionierung: Dein digitaler Mitarbeiter. | Leitsatz: "Die KI arbeitet für dich."
+   - Beschreibung: Dein eigener KI-Agent auf einem Server. Er arbeitet auch bei ausgeschaltetem Computer, erledigt geplante Aufgaben selbstständig und ist von überall über Telegram und dein eigenes Web-Dashboard erreichbar.
+   - Konditionen: Einmalige Einrichtung ab 3.000 €. Dauer: 7–14 Tage. Optionaler Support ab 100 € monatlich.
    - Enthält: Eigener KI-Agent, 24/7-Serverbetrieb, individuelle Einrichtung, Langzeitgedächtnis und Projektwissen, eigenes Web-Dashboard, Telegram-Anbindung, Integration externer Dienste, zeitgesteuerte Aufgaben, automatische Berichte und Benachrichtigungen.
    - Ideal für: Wachsende Teams, Kanzleien, Praxen, Agenturen, Handwerker, Dienstleister, Onlineshops.
 
 3. KI-Unternehmenslösungen (ab 10.000 €):
-   - Einmalige Einrichtung ab 10.000 €. Dauer: 14–30 Tage (nach Projektumfang). Optionaler Support ab 200 € monatlich.
+   - Positionierung: Dein intelligentes KI-Team. | Leitsatz: "Ein KI-Team arbeitet für dein Unternehmen."
+   - Beschreibung: Ein individuell entwickeltes KI-System, das spezialisierte Agenten, Softwarelösungen und deine Geschäftsprozesse miteinander vernetzt.
+   - Konditionen: Einmalige Einrichtung ab 10.000 €. Dauer: 14–30 Tage (abhängig vom Umfang). Optionaler Support ab 200 € monatlich.
    - Enthält: Alle Leistungen des KI-Agenten 24/7, Analyse bestehender Geschäftsprozesse, Identifikation von Automatisierungspotenzialen, Optimierung interner Arbeitsabläufe, individuelle Softwarelösungen, Vernetzung bestehender Systeme, komplexe KI-Automatisierungen, Zusammenarbeit mehrerer KI-Agenten, individuelle Dashboards.
    - Ideal für: Mittelstand, Großunternehmen und komplexe Prozesslandschaften.
+
+ZENTRALE UNTERSCHIEDE ZWISCHEN DEN PAKETEN (VERSTÄNDLICH ERKLÄREN):
+- Lokale Nutzung vs. eigenständiger Serverbetrieb: Der KI-Assistent (Paket 1) läuft direkt auf dem eigenen Computer des Kunden und ist aktiv, wenn der Computer genutzt wird. Der KI-Agent 24/7 (Paket 2) und die KI-Unternehmenslösungen (Paket 3) laufen auf einem Server rund um die Uhr weiter – auch bei ausgeschaltetem Computer – und sind jederzeit von überall über Telegram und ein eigenes Web-Dashboard erreichbar.
+- Direkte Zusammenarbeit vs. selbstständige Aufgabenbearbeitung: Beim KI-Assistenten arbeitest du aktiv mit deiner KI zusammen ("Du arbeitest mit KI"). Beim KI-Agenten 24/7 übernimmt der Agent geplante und wiederkehrende Aufgaben selbstständig im Hintergrund und liefert Ergebnisse oder Berichte ("Die KI arbeitet für dich").
+- Einzelner KI-Agent vs. vernetztes KI-Agentensystem: Paket 2 stellt einen einzelnen eigenständigen KI-Agenten bereit. Paket 3 vernetzt mehrere spezialisierte KI-Agenten, individuelle Softwarelösungen und bestehende Unternehmensprozesse zu einem zusammenarbeitenden Gesamtsystem ("Ein KI-Team arbeitet für dein Unternehmen").
+- Einmalige Einrichtungskosten vs. laufende Betriebskosten: Die Paketpreise (1.000 €, ab 3.000 €, ab 10.000 €) sind einmalige Einrichtungskosten. Laufende Kosten für KI-Nutzung (Modell-Verbrauch) und gegebenenfalls Serverbetrieb (ab Paket 2) trägt der Kunde direkt über seine eigenen Anbieterkonten. Support ist bei Paket 1 nicht erforderlich, bei Paket 2 ab 100 €/Monat und bei Paket 3 ab 200 €/Monat optional verfügbar.
 
 ALLGEMEINE GESCHÄFTSREGELN:
 - Einrichtungspreise sind ausnahmslos einmalige Kosten.
 - Der Kunde trägt seinen KI-Verbrauch (Modell-Token) und eventuelles Server-Hosting selbst direkt über seine eigenen Anbieterkonten.
 - Verspreche NIEMALS inkludierte Token-Kontingente oder kostenlosen Verbrauch.
 - Biete NIEMALS Rabatte oder Sonderkonditionen an.
-- Technische Produktnamen wie "Hermes" oder "Cloud Jarvis" sind streng INTERN und dürfen NIEMALS genannt werden.
+- Technische Produktnamen oder konkrete Softwareanbieter wie "Hermes", "Cloud Jarvis" oder "Claude Code" sind streng INTERN und dürfen NIEMALS genannt werden.
 - Zusätzliche Entwicklungen werden separat vereinbart.
 
 SCHNITTSTELLEN & INTEGRATIONEN:
@@ -244,8 +267,20 @@ export function buildFallbackReply(userTexts: string[]): string {
   const cta = "Trage dich für die nächste Onboarding-Phase gern unverbindlich in unsere Warteliste direkt unter dem Chat ein.";
   const pkgByName = (name: string) => ARSLAN_PACKAGES.find((p) => p.name === name)!;
 
+  // 3. Fragen zu Unterschieden (lokal vs. Server, Zusammenarbeit vs. autonom, Einzelagent vs. Team)
+  if (has(lastLower, ["unterschied", "vergleich", "lokal", "computer", "ausgeschaltet", "laptop"])) {
+    if (!has(lastLower, ["chatgpt", "gpt"])) {
+      return `Unsere drei Stufen bauen klar aufeinander auf: Beim KI-Assistenten (1.000 €) läuft deine KI lokal auf deinem Computer und du arbeitest aktiv mit ihr zusammen. Der KI-Agent 24/7 (ab 3.000 €) läuft auf einem Server auch bei ausgeschaltetem Computer weiter, erledigt Aufgaben selbstständig und ist über Telegram sowie dein Web-Dashboard erreichbar. Bei den KI-Unternehmenslösungen (ab 10.000 €) arbeitet ein vernetztes KI-Team aus mehreren spezialisierten Agenten für dein gesamtes Unternehmen. ${cta}`;
+    }
+  }
+
+  // 4. Fragen zu laufenden vs. einmaligen Kosten
+  if (has(lastLower, ["laufend", "monatlich", "betriebskosten", "hosting", "serverkosten", "folgekosten"])) {
+    return `Unsere Paketpreise (1.000 €, ab 3.000 €, ab 10.000 €) sind einmalige Einrichtungskosten. Die laufenden Kosten für KI-Modellnutzung und ab Paket 2 den Serverbetrieb trägst du transparent direkt über deine eigenen Anbieterkonten. Optional bieten wir ab dem KI-Agenten 24/7 laufenden Support ab 100 € bzw. ab 200 € monatlich an. ${cta}`;
+  }
+
   let rec: PricingPackage | null = null;
-  if (has(all, ["unternehmen", "enterprise", "konzern", "abteilung", "erp", "multi-agent", "mehrere agenten", "komplex", "softwarelösung"])) {
+  if (has(all, ["unternehmen", "enterprise", "konzern", "abteilung", "erp", "multi-agent", "mehrere agenten", "ki-team", "komplex", "softwarelösung"])) {
     rec = pkgByName("KI-Unternehmenslösungen");
   } else if (has(all, ["agent", "24/7", "server", "telegram", "dashboard", "crm", "team", "werkstatt", "immobilien", "shop", "agentur", "reinigung", "sicherheit"])) {
     rec = pkgByName("KI-Agent 24/7");
@@ -254,21 +289,19 @@ export function buildFallbackReply(userTexts: string[]): string {
   }
 
   if (rec) {
-    const audience = rec.targetAudience.replace(/\.$/, "");
-    return `Für deine Anforderungen passt unser Paket ${rec.name} (${rec.priceFrom}, einmalig). Es eignet sich besonders für ${audience.charAt(0).toLowerCase()}${audience.slice(1)}. ${cta}`;
+    return `Für deine Anforderungen passt unser Paket ${rec.name} (${rec.priceFrom}, einmalig) – ${rec.positioning} ${rec.description} (${rec.motto}) ${cta}`;
   }
 
   if (has(lastLower, ["preis", "kosten", "kostet", "paket", "angebot", "budget", "warteliste", "konditionen"])) {
-    const list = ARSLAN_PACKAGES.map((p) => `${p.name} (${p.priceFrom})`).join(", ");
-    return `Bei Yahya bieten wir drei Leistungspakete an: ${list} – jeweils als einmalige Einrichtung. Verrätst du mir, welche konkreten Aufgaben deine KI übernehmen soll? ${cta}`;
+    return `Bei Yahya bieten wir drei klar abgestufte Pakete an (jeweils einmalige Einrichtung): KI-Assistent auf deinem Computer für 1.000 € ("Du arbeitest mit KI"), KI-Agent 24/7 auf einem Server ab 3.000 € ("Die KI arbeitet für dich") und KI-Unternehmenslösungen als vernetztes KI-Team ab 10.000 €. Welche Aufgaben möchtest du lösen? ${cta}`;
   }
 
   if (has(lastLower, ["chatgpt", "gpt", "unterschied", "warum"])) {
-    return `Im Gegensatz zu ChatGPT wird deine KI bei Yahya individuell auf deine Projekte eingerichtet, behält ein echtes Langzeitgedächtnis und arbeitet direkt mit deinen bestehenden Werkzeugen zusammen. ${cta}`;
+    return `Im Gegensatz zu ChatGPT wird deine KI bei Yahya individuell auf deine Projekte eingerichtet, behält ein echtes Langzeitgedächtnis und arbeitet je nach Paket lokal auf deinem Computer oder rund um die Uhr autonom auf einem Server mit deinen Werkzeugen zusammen. ${cta}`;
   }
 
   if (isOngoing) {
-    return `Gerne! Beschreibe mir kurz deinen aktuellen Arbeitsablauf oder welche Programme du nutzt, damit ich dir die ideale Lösung bei Yahya vorschlagen kann. ${cta}`;
+    return `Gerne! Beschreibe mir kurz deinen aktuellen Arbeitsablauf oder ob die KI lokal mit dir am Computer oder rund um die Uhr selbstständig auf einem Server arbeiten soll. ${cta}`;
   }
 
   return `Hallo! Ich berate dich gerne zu unseren KI-Lösungen bei Yahya: KI-Assistent (1.000 €), KI-Agent 24/7 (ab 3.000 €) und KI-Unternehmenslösungen (ab 10.000 €). Welchen Bereich möchtest du automatisieren? ${cta}`;
