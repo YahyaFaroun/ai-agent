@@ -1,5 +1,6 @@
 "use client";
 
+import { useSyncExternalStore } from "react";
 import {
   Check,
   Clock,
@@ -10,13 +11,22 @@ import {
   Sparkles,
   type LucideIcon,
 } from "lucide-react";
+import {
+  AGENT_PROMO_HEADLINE,
+  AGENT_PROMO_UNTIL_TEXT,
+  AGENT_REGULAR_PRICE_LABEL,
+  getAgentPromoClientSnapshot,
+  getAgentPromoServerSnapshot,
+  subscribeAgentPromo,
+} from "@/lib/promoOffer";
 
 interface PackageItem {
   name: string;
-  badge: string;
+  badge?: string;
   icon: LucideIcon;
   positioning: string;
   price: string;
+  hasPromo?: boolean;
   priceNote: string;
   description: string;
   motto: string;
@@ -27,10 +37,16 @@ interface PackageItem {
 }
 
 export default function PricingSection() {
+  const promoActive = useSyncExternalStore(
+    subscribeAgentPromo,
+    getAgentPromoClientSnapshot,
+    getAgentPromoServerSnapshot
+  );
+
   const packages: PackageItem[] = [
     {
       name: "KI-Assistent",
-      badge: "Empfohlen",
+      badge: "Lokal",
       icon: Laptop,
       positioning: "Dein persönlicher Assistent.",
       price: "1.000 €",
@@ -50,14 +66,15 @@ export default function PricingSection() {
         "Nutzung eigener kompatibler KI-Zugänge",
         "Eigenständige Verwaltung",
       ],
-      featured: true, // Erstes Leistungspaket hervorgehoben
+      featured: false,
     },
     {
       name: "KI-Agent 24/7",
       badge: "Autonom",
       icon: Server,
       positioning: "Dein digitaler Mitarbeiter.",
-      price: "ab 3.000 €",
+      price: AGENT_REGULAR_PRICE_LABEL,
+      hasPromo: true,
       priceNote: "Einmalige Einrichtung",
       description:
         "Dein eigener KI-Agent auf einem Server. Er arbeitet auch bei ausgeschaltetem Computer, erledigt geplante Aufgaben selbstständig und ist von überall über Telegram und dein eigenes Web-Dashboard erreichbar.",
@@ -75,7 +92,7 @@ export default function PricingSection() {
         "Zeitgesteuerte Aufgaben",
         "Automatische Berichte und Benachrichtigungen",
       ],
-      featured: false,
+      featured: true,
     },
     {
       name: "KI-Unternehmenslösungen",
@@ -150,7 +167,7 @@ export default function PricingSection() {
                 key={pkg.name}
                 className={`min-w-0 rounded-2xl p-6 sm:p-7 lg:p-6 xl:p-7 flex flex-col gap-5 lg:grid lg:row-span-7 lg:grid-rows-subgrid lg:gap-y-5 transition-all ${
                   pkg.featured
-                    ? "hud-panel-active border-[#3ECF8E]/70 shadow-[0_0_36px_rgba(62,207,142,0.22)] lg:-translate-y-1"
+                    ? "hud-panel-active border-[#3ECF8E]/70 shadow-[0_0_36px_rgba(62,207,142,0.22)]"
                     : "hud-panel border border-zinc-800/90 hover:border-zinc-700"
                 }`}
               >
@@ -167,16 +184,18 @@ export default function PricingSection() {
                     >
                       <Icon className="w-4 h-4" />
                     </div>
-                    <span
-                      className={`text-xs font-mono uppercase tracking-wider px-2.5 py-1 rounded-full border ${
-                        pkg.featured
-                          ? "bg-[#3ECF8E]/20 border-[#3ECF8E]/55 text-[#3ECF8E] flex items-center gap-1 font-bold"
-                          : "bg-zinc-900 border-zinc-800 text-zinc-300"
-                      }`}
-                    >
-                      {pkg.featured && <Sparkles className="w-3 h-3" />}
-                      {pkg.badge}
-                    </span>
+                    {pkg.badge && (
+                      <span
+                        className={`text-xs font-mono uppercase tracking-wider px-2.5 py-1 rounded-full border ${
+                          pkg.featured
+                            ? "bg-[#3ECF8E]/20 border-[#3ECF8E]/55 text-[#3ECF8E] flex items-center gap-1 font-bold"
+                            : "bg-zinc-900 border-zinc-800 text-zinc-300"
+                        }`}
+                      >
+                        {pkg.featured && <Sparkles className="w-3 h-3" />}
+                        {pkg.badge}
+                      </span>
+                    )}
                   </div>
                   <h3 className="text-lg xl:text-xl font-bold text-white tracking-tight">
                     {pkg.name}
@@ -186,14 +205,24 @@ export default function PricingSection() {
                   </p>
                 </div>
 
-                {/* 2. Preis */}
-                <div>
+                {/* 2. Preis – regulärer Preis exakt auf einer horizontalen Linie */}
+                <div className="self-start">
                   <div className="text-3xl sm:text-4xl font-extrabold font-mono text-white tracking-tight">
                     {pkg.price}
                   </div>
-                  <div className="text-xs font-mono text-zinc-400 mt-1">
+                  <div className="text-xs font-mono text-zinc-400 mt-1.5">
                     {pkg.priceNote}
                   </div>
+                  {pkg.hasPromo && promoActive && (
+                    <div className="mt-2" suppressHydrationWarning>
+                      <div className="text-lg sm:text-xl font-extrabold font-mono text-[#3ECF8E] tracking-tight">
+                        {AGENT_PROMO_HEADLINE}
+                      </div>
+                      <div className="text-xs font-mono text-zinc-300 mt-0.5">
+                        {AGENT_PROMO_UNTIL_TEXT}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* 3. Beschreibung (Fließtext 15 px) */}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useSyncExternalStore } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -12,27 +12,37 @@ import {
   Send,
 } from "lucide-react";
 import type { StructuredInquiryPayload } from "@/app/api/inquiries/route";
+import {
+  formatAgentWaitlistOptionDesc,
+  formatAgentWaitlistOptionName,
+  getAgentPromoClientSnapshot,
+  getAgentPromoServerSnapshot,
+  getAgentWaitlistOptionName,
+  subscribeAgentPromo,
+} from "@/lib/promoOffer";
 
 type UsageScope = "Privat" | "Geschäftlich" | "Beides" | "";
 
-const PACKAGE_OPTIONS = [
-  {
-    name: "KI-Assistent (1.000 €)",
-    desc: "Persönliche Assistenz, Recherche & Büroorganisation",
-  },
-  {
-    name: "KI-Agent 24/7 (ab 3.000 €)",
-    desc: "Autonomer 24/7-Serverbetrieb, Dashboard, Telegram",
-  },
-  {
-    name: "KI-Unternehmenslösungen (ab 10.000 €)",
-    desc: "Prozessoptimierung, Multi-Agenten-Systeme & Integration",
-  },
-  {
-    name: "Noch unentschieden / Beratung gewünscht",
-    desc: "Alp Arsalan analysiert deinen Bedarf und empfiehlt die passende Option",
-  },
-] as const;
+function buildPackageOptions(promoActive: boolean) {
+  return [
+    {
+      name: "KI-Assistent (1.000 €)",
+      desc: "Persönliche Assistenz, Recherche & Büroorganisation",
+    },
+    {
+      name: formatAgentWaitlistOptionName(promoActive),
+      desc: formatAgentWaitlistOptionDesc(promoActive),
+    },
+    {
+      name: "KI-Unternehmenslösungen (ab 10.000 €)",
+      desc: "Prozessoptimierung, Multi-Agenten-Systeme & Integration",
+    },
+    {
+      name: "Noch unentschieden / Beratung gewünscht",
+      desc: "Alp Arsalan analysiert deinen Bedarf und empfiehlt die passende Option",
+    },
+  ] as const;
+}
 
 const USAGE_OPTIONS: Array<"Privat" | "Geschäftlich" | "Beides"> = [
   "Privat",
@@ -68,11 +78,19 @@ const INTEGRATION_OPTIONS = [
 
 export default function MultiStepInquiryForm() {
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
+  const promoActive = useSyncExternalStore(
+    subscribeAgentPromo,
+    getAgentPromoClientSnapshot,
+    getAgentPromoServerSnapshot
+  );
 
   // Persistent state across all 4 steps
-  const [selectedPackage, setSelectedPackage] = useState<string>(
-    "KI-Assistent (1.000 €)"
-  );
+  const [selectedPackage, setSelectedPackage] = useState<string>("KI-Agent 24/7");
+  const packageOptions = buildPackageOptions(promoActive);
+  const currentAgentOptionName = packageOptions[1].name;
+  const effectiveSelectedPackage = selectedPackage.startsWith("KI-Agent 24/7")
+    ? currentAgentOptionName
+    : selectedPackage;
   const [usageScope, setUsageScope] = useState<UsageScope>("");
   const [industry, setIndustry] = useState("");
 
@@ -108,7 +126,7 @@ export default function MultiStepInquiryForm() {
       }
   >({ status: "idle" });
 
-  // Event-Listener für Paketauswahl aus der Pricing-Sektion
+  // Event-Listener für Paketauswahl von den Preiskarten
   useEffect(() => {
     const handler = (e: Event) => {
       const custom = e as CustomEvent<string>;
@@ -116,7 +134,7 @@ export default function MultiStepInquiryForm() {
       if (pkg.includes("Assistent")) {
         setSelectedPackage("KI-Assistent (1.000 €)");
       } else if (pkg.includes("24/7")) {
-        setSelectedPackage("KI-Agent 24/7 (ab 3.000 €)");
+        setSelectedPackage(getAgentWaitlistOptionName());
       } else if (pkg.includes("Unternehmenslösungen") || pkg.includes("Enterprise")) {
         setSelectedPackage("KI-Unternehmenslösungen (ab 10.000 €)");
       }
@@ -258,7 +276,7 @@ export default function MultiStepInquiryForm() {
     }
 
     const payload: StructuredInquiryPayload = {
-      selectedPackage,
+      selectedPackage: effectiveSelectedPackage,
       usageScope,
       industry: isBusinessUsage ? industry.trim() : null,
       tasks,
@@ -321,7 +339,7 @@ export default function MultiStepInquiryForm() {
 
   const resetAll = () => {
     setStep(1);
-    setSelectedPackage("KI-Assistent (1.000 €)");
+    setSelectedPackage(getAgentWaitlistOptionName());
     setUsageScope("");
     setIndustry("");
     setTasks([]);
@@ -526,9 +544,9 @@ export default function MultiStepInquiryForm() {
                     <label className="block text-xs font-mono uppercase tracking-wider text-zinc-300">
                       Gewünschtes Leistungspaket <span className="text-[#3ECF8E]">*</span>
                     </label>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                      {PACKAGE_OPTIONS.map((pkg) => {
-                        const active = selectedPackage === pkg.name;
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5" suppressHydrationWarning>
+                      {packageOptions.map((pkg) => {
+                        const active = effectiveSelectedPackage === pkg.name;
                         return (
                           <button
                             key={pkg.name}

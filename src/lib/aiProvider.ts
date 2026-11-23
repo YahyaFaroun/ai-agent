@@ -1,4 +1,4 @@
-import { ARSLAN_SYSTEM_PROMPT, ISLAMIC_GREETING_REGEX } from "./knowledgeBase";
+import { getArslanSystemPrompt, ISLAMIC_GREETING_REGEX } from "./knowledgeBase";
 
 export interface ChatMessage {
   role: "user" | "assistant" | "system";
@@ -54,7 +54,7 @@ class ProviderError extends Error {
  * islamische Begrüßungserwiderung, Markenname Yahya).
  */
 function getSystemInstruction(hasHistory: boolean, userMessage: string): string {
-  let prompt = ARSLAN_SYSTEM_PROMPT;
+  let prompt = getArslanSystemPrompt();
 
   if (hasHistory) {
     prompt += "\n\nHINWEIS ZUR GESPRÄCHSFÜHRUNG: Dies ist ein laufendes Gespräch. Stelle dich NICHT noch einmal vor (kein 'Ich bin Alp Arsalan', kein 'Als KI-Berater...'). Antworte direkt und individuell auf das Anliegen.";
